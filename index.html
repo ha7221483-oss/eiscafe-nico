@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eiscafé Nico - Demo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>Eiscafé Nico</header>
+
+<section id="menu">
+  <h2>Unsere Auswahl</h2>
+
+  <!-- Kategorie-Buttons -->
+  <div class="categories">
+    <button class="btn active" data-target="speisekarteItems">Eisbecher</button>
+    <button class="btn" data-target="warmItems">Warmgetränke</button>
+    <button class="btn" data-target="kaltItems">Kaltgetränke</button>
+    <button class="btn" data-target="alkItems">Alkoholische Getränke</button>
+    <button class="btn" data-target="kuchenItems">Kuchen</button>
+    <button class="btn" data-target="ausserhausItems">Außerhaus</button>
+  </div>
+
+  <!-- Eisbecher -->
+  <div id="speisekarteItems" class="grid" style="margin-top:30px;">
+    <div class="card" data-name="Früchtebecher" data-desc="Gemischtes Eis, frisches Obst, Topping" data-price="10,90 €">
+      <h3>01 Früchtebecher</h3>
+      <p class="price">10,90 €</p>
+    </div>
+    <!-- weitere Karten wie im Beispiel ... -->
+  </div>
+
+  <!-- Weitere Kategorien ... -->
+  <div id="warmItems" class="grid" aria-hidden="true" style="display:none;margin-top:30px;">
+    <div class="card" data-name="Kaffee Crema" data-desc="auch entkoffeiniert" data-price="1,70 €">
+      <h3>Kaffee Crema</h3>
+      <p class="price">1,70 €</p>
+    </div>
+  </div>
+
+</section>
+
+<!-- Modal -->
+<div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal-content" role="document">
+    <button class="close" aria-label="Schließen">&times;</button>
+    <h3 id="modal-name"></h3>
+    <p id="modal-desc"></p>
+    <p id="modal-price" class="price"></p>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
