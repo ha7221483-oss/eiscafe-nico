@@ -2,7 +2,7 @@
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background-color: #f6e9dc; /* etwas dunkler als vorher (#fff8f0) */
+  background-color: #fbeaea; /* sanftes Rosé */
   color: #333;
   -webkit-tap-highlight-color: transparent;
 }
@@ -13,15 +13,15 @@ header {
   padding: 60px 20px;
   text-align: center;
   font-family: 'Pacifico', cursive;
-  font-size: 40px;
-  color: #d35400;
+  font-size: 42px;
+  color: #b22222; /* edles Rotbraun */
   position: relative;
 }
 header::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(245, 200, 150, 0.35); /* leicht stärkerer Overlay */
+  background: rgba(255, 210, 210, 0.4); /* zarter Overlay-Schimmer */
 }
 header * {
   position: relative;
@@ -34,7 +34,7 @@ section {
 
 h2 {
   font-family: 'Pacifico', cursive;
-  color: #d35400;
+  color: #b22222;
   margin-bottom: 10px;
 }
 
@@ -54,10 +54,10 @@ h2 {
   margin: 0 auto;
 }
 .card {
-  background: linear-gradient(145deg, #f3d9c6 70%, #f9a8a8 30%); /* etwas dunkler */
+  background: linear-gradient(145deg, #ffe0e0 70%, #ffd1b3 30%); /* warmes Rosé → Apricot */
   border-radius: 15px;
   padding: 20px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
   cursor: pointer;
   transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.3s ease;
   outline: none;
@@ -70,12 +70,12 @@ h2 {
 .card:focus-visible {
   transform: scale(1.05);
   box-shadow: 0 10px 22px rgba(0,0,0,0.25);
-  background: linear-gradient(145deg, #f9a8a8 70%, #f3d9c6 30%);
+  background: linear-gradient(145deg, #ffd1b3 70%, #ffe0e0 30%);
   border: 2px solid #e67e22;
 }
 .card h3 { 
   margin: 5px 0; 
-  color: #e67e22; 
+  color: #d35400; /* harmoniert mit Buttonorange */
 }
 .price { 
   font-weight: bold; 
@@ -91,7 +91,7 @@ h2 {
 }
 .btn {
   margin: 5px;
-  background-color: #e67e22;
+  background-color: #e67e22; /* kräftiges Orange */
   color: white;
   border: none;
   padding: 12px 18px;
@@ -121,7 +121,7 @@ h2 {
 }
 .modal[aria-hidden="false"] { display:flex; }
 .modal-content {
-  background-color: #f6e9dc; /* auch hier dunkler, passt zum Body */
+  background-color: #fff5f5; /* helles Rosa, abgesetzt vom Hintergrund */
   padding: 20px;
   border-radius: 15px;
   max-width: 420px;
@@ -167,7 +167,7 @@ h2 {
 .site-title {
   font-size: 28px;
   font-family: 'Pacifico', cursive;
-  color: #d35400;
+  color: #b22222; /* edel passend zum Header */
   z-index: 2;
 }
 
