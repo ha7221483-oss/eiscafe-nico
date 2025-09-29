@@ -2,12 +2,12 @@
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background-color: #fff8f0;
+  background-color: #f6e9dc; /* etwas dunkler als vorher (#fff8f0) */
   color: #333;
-  -webkit-tap-highlight-color: transparent; /* kein blauer Effekt auf Touch */
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* Header + Logo mit Hintergrund */
+/* Header */
 header {
   background: url('images/logo-bild1.png') no-repeat center/cover;
   padding: 60px 20px;
@@ -21,10 +21,10 @@ header::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(255, 220, 168, 0.3); /* Overlay-Effekt */
+  background: rgba(245, 200, 150, 0.35); /* leicht stärkerer Overlay */
 }
 header * {
-  position: relative; /* Inhalt über Overlay */
+  position: relative;
 }
 
 section {
@@ -40,7 +40,7 @@ h2 {
 
 .hint {
   font-size: 14px;
-  color: #666;
+  color: #555;
   margin-bottom: 20px;
   font-style: italic;
 }
@@ -54,7 +54,7 @@ h2 {
   margin: 0 auto;
 }
 .card {
-  background: linear-gradient(145deg, #fff3e0 70%, #ffbfbf 30%);
+  background: linear-gradient(145deg, #f3d9c6 70%, #f9a8a8 30%); /* etwas dunkler */
   border-radius: 15px;
   padding: 20px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.12);
@@ -64,14 +64,13 @@ h2 {
 }
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.2);
 }
-/* Aktiver Zustand */
 .card.active,
 .card:focus-visible {
   transform: scale(1.05);
   box-shadow: 0 10px 22px rgba(0,0,0,0.25);
-  background: linear-gradient(145deg, #ffbfbf 70%, #fff3e0 30%);
+  background: linear-gradient(145deg, #f9a8a8 70%, #f3d9c6 30%);
   border: 2px solid #e67e22;
 }
 .card h3 { 
@@ -80,7 +79,7 @@ h2 {
 }
 .price { 
   font-weight: bold; 
-  color: #333; 
+  color: #222; 
 }
 
 /* Buttons */
@@ -99,11 +98,14 @@ h2 {
   font-size: 16px;
   border-radius: 10px;
   cursor: pointer;
-  transition: background 0.25s ease;
+  transition: background 0.25s ease, transform 0.2s ease;
   outline: none;
 }
 .btn:hover,
-.btn:focus-visible { background-color: #d35400; }
+.btn:focus-visible { 
+  background-color: #d35400;
+  transform: scale(1.05);
+}
 .btn.active { background-color: #d35400; }
 
 /* Modal */
@@ -119,7 +121,7 @@ h2 {
 }
 .modal[aria-hidden="false"] { display:flex; }
 .modal-content {
-  background-color: #fff8f0;
+  background-color: #f6e9dc; /* auch hier dunkler, passt zum Body */
   padding: 20px;
   border-radius: 15px;
   max-width: 420px;
@@ -145,7 +147,7 @@ h2 {
   color: #e67e22;
 }
 
-/* Logo Button (optional für Header) */
+/* Logo Button */
 .logo-button {
   background: none;
   border: none;
