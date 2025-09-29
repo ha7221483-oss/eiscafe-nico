@@ -1,3 +1,12 @@
+/*
+  script.js – angepasst
+  - Speisekarten-Modal (Name, Beschreibung, Preis)
+  - Kategorienumschaltung (showCategory)
+  - Karten-Click-Fallback (data-* oder inline onclick)
+  - Eismobil-Logik (Modal oder Section)
+  - Fokusfix: nach Schließen zurück zur zuletzt geöffneten Karte
+*/
+
 (function () {
   // -------------------------
   // Allgemeines Modal (Produkte)
@@ -8,6 +17,9 @@
   const priceEl = document.getElementById('modal-price');
   const closeBtn = modal?.querySelector('.close');
 
+  // Merker für zuletzt geklickte Karte
+  let lastFocusedCard = null;
+
   function _setModalState(open, container = modal) {
     if (!container) return;
     container.style.display = open ? 'flex' : 'none';
@@ -15,27 +27,34 @@
     document.body.style.overflow = open ? 'hidden' : '';
   }
 
-  function openModal(name, desc, price) {
+  function openModal(name, desc, price, triggerEl) {
     if (!modal) return;
     nameEl.textContent = name || '';
     descEl.textContent = desc || '';
     priceEl.textContent = price || '';
     _setModalState(true, modal);
+
+    // merken, wer Modal geöffnet hat
+    lastFocusedCard = triggerEl || null;
+
     if (closeBtn) closeBtn.focus();
   }
 
   function closeModal() {
     _setModalState(false, modal);
-    // 👉 Optional: aktive Karte wieder entfernen
-    // document.querySelectorAll('.card.active').forEach(c => c.classList.remove('active'));
+
+    // Fokus zurücksetzen
+    if (lastFocusedCard) {
+      lastFocusedCard.focus();
+      lastFocusedCard = null;
+    }
   }
 
+  // Exponiere global für inline onclick
   window.openModal = openModal;
   window.closeModal = closeModal;
 
-  // -------------------------
-  // Kategorienumschaltung
-  // -------------------------
+  // showCategory
   window.showCategory = function (id, btn) {
     document.querySelectorAll('#menu .grid').forEach(div => {
       div.style.display = 'none';
@@ -47,17 +66,15 @@
     if (btn && btn.classList) btn.classList.add('active');
   };
 
-  // -------------------------
-  // ESC & Overlay schließen
-  // -------------------------
+  // Modal: Overlay-Klick & ESC
   if (modal) {
-    modal.addEventListener('click', function (e) {
+    modal.addEventListener('click', e => {
       if (e.target === modal) closeModal();
     });
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
   }
 
-  document.addEventListener('keydown', function (e) {
+  document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
       if (modal && modal.getAttribute('aria-hidden') === 'false') closeModal();
       const em = document.getElementById('eismobil-modal');
@@ -70,36 +87,31 @@
   });
 
   // -------------------------
-  // Karten & Klick-Handling
+  // Karten / progressive enhancement
   // -------------------------
-  document.addEventListener('DOMContentLoaded', function () {
-    const cards = document.querySelectorAll('.card');
-
-    cards.forEach(card => {
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.card').forEach(card => {
       if (card.dataset && (card.dataset.name || card.dataset.price || card.dataset.desc)) {
         if (!card.getAttribute('onclick')) {
           card.addEventListener('click', function () {
             const name = card.dataset.name || card.querySelector('h3')?.innerText || '';
             const desc = card.dataset.desc || card.querySelector('p')?.innerText || '';
             const price = card.dataset.price || card.querySelector('.price')?.innerText || '';
-
-            // 👉 aktive Karte setzen
-            cards.forEach(c => c.classList.remove('active'));
-            card.classList.add('active');
-
-            openModal(name, desc, price);
+            openModal(name, desc, price, card); // card mitgeben
           });
         }
       } else {
-        // Falls nur normales Modal via onclick existiert → trotzdem active toggeln
-        card.addEventListener('click', () => {
-          cards.forEach(c => c.classList.remove('active'));
-          card.classList.add('active');
-        });
+        // falls onclick im HTML genutzt wird → ebenfalls triggerEl übergeben
+        const origClick = card.getAttribute('onclick');
+        if (origClick && origClick.includes('openModal')) {
+          card.addEventListener('click', () => {
+            lastFocusedCard = card;
+          });
+        }
       }
     });
 
-    // Erste Kategorie beim Laden aktivieren
+    // erste Kategorie aktivieren
     const firstBtn = document.querySelector('.categories .btn.active');
     if (firstBtn) {
       if (firstBtn.click) firstBtn.click();
@@ -122,16 +134,11 @@
           if (emClose) emClose.focus();
           return;
         }
-
         if (eSection) {
           const expanded = eSection.classList.toggle('expanded');
           if (expanded) {
             eSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
           }
-        } else {
-          const subject = encodeURIComponent('Eismobil Buchungsanfrage');
-          const body = encodeURIComponent('Hallo,%0A%0Aich möchte das Eismobil buchen. Bitte melden Sie sich bei mir.%0A%0ADatum:%0AOrt:%0AAnzahl Personen:%0A%0AMit freundlichen Grüßen,');
-          window.location.href = `mailto:info@eiscafenico.de?subject=${subject}&body=${body}`;
         }
       });
     }
@@ -140,7 +147,7 @@
     if (bookBtn) {
       bookBtn.addEventListener('click', function () {
         const subject = encodeURIComponent('Eismobil Buchungsanfrage');
-        const body = encodeURIComponent('Hallo,%0A%0Aich möchte das Eismobil buchen. Bitte melden Sie sich bei mir.%0A%0ADatum:%0AOrt:%0AAnzahl Personen:%0A%0AMit freundlichen Grüßen,');
+        const body = encodeURIComponent('Hallo,%0A%0Aich möchte das Eismobil buchen.%0A%0ADatum:%0AOrt:%0AAnzahl Personen:%0A%0AMit freundlichen Grüßen,');
         window.location.href = `mailto:info@eiscafenico.de?subject=${subject}&body=${body}`;
       });
     }
@@ -152,7 +159,7 @@
         eModal.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
       });
-      eModal.addEventListener('click', (ev) => {
+      eModal.addEventListener('click', ev => {
         if (ev.target === eModal) {
           eModal.style.display = 'none';
           eModal.setAttribute('aria-hidden', 'true');
