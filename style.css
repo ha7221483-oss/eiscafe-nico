@@ -5,23 +5,38 @@ body {
   background-color: #fff8f0;
   color: #333;
 }
+
+/* Header + Logo mit Hintergrund */
 header {
-  background-color: #ffdca8;
-  padding: 40px 20px;
+  background: url('hintergrundbild.jpg') no-repeat center/cover;
+  padding: 60px 20px;
   text-align: center;
   font-family: 'Pacifico', cursive;
   font-size: 40px;
   color: #d35400;
+  position: relative;
 }
+header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 220, 168, 0.6); /* leichter Overlay-Effekt */
+}
+header * {
+  position: relative; /* sorgt dafür, dass Inhalt vor Overlay steht */
+}
+
 section {
   padding: 50px 20px;
   text-align: center;
 }
+
 h2 {
   font-family: 'Pacifico', cursive;
   color: #d35400;
   margin-bottom: 10px;
 }
+
 .hint {
   font-size: 14px;
   color: #666;
@@ -53,7 +68,12 @@ h2 {
 .price { font-weight: bold; color: #333; }
 
 /* Buttons */
-.categories { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; }
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
 .btn {
   margin: 5px;
   background-color: #e67e22;
@@ -114,35 +134,41 @@ h2 {
   height: auto;
   border-radius: 12px;
   margin-bottom: 10px;
+  z-index: 2;
 }
 .site-title {
   font-size: 28px;
   font-family: 'Pacifico', cursive;
   color: #d35400;
+  z-index: 2;
 }
 
-/* Slideshow */
-.slideshow-container {
-  max-width: 600px;
-  margin: 0 auto;
-  position: relative;
+/* Eismobil Bereich */
+.eismobil-section {
+  background-color: #fff3e0;
+  border-radius: 15px;
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 30px 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
 }
-.slide {
-  display: none;
+.eismobil-section.expanded {
+  background-color: #ffe6c7;
+  transform: scale(1.02);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
 }
-.slide img {
-  width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-
-/* Eismobil Modal */
-.modal-eismobil-img {
+.eismobil-img {
   width: 100%;
   max-width: 320px;
   margin: 15px auto;
   display: block;
   border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.eismobil-img:hover {
+  transform: scale(1.05);
 }
 
 /* Responsiv */
