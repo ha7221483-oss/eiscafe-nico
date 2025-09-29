@@ -53,19 +53,27 @@ h2 {
   margin: 0 auto;
 }
 .card {
-  background-color: #fff3e0;
+  /* alter Hintergrund: #fff3e0 */
+  background: linear-gradient(145deg, #fff3e0 70%, #ffbfbf 30%);
   border-radius: 15px;
   padding: 20px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.12);
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
 }
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+  background: linear-gradient(145deg, #ffbfbf 70%, #fff3e0 30%);
 }
-.card h3 { margin: 5px 0; color: #e67e22; }
-.price { font-weight: bold; color: #333; }
+.card h3 { 
+  margin: 5px 0; 
+  color: #e67e22; 
+}
+.price { 
+  font-weight: bold; 
+  color: #333; 
+}
 
 /* Buttons */
 .categories {
