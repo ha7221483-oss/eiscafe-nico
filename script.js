@@ -1,26 +1,23 @@
 /*
-  script.js – angepasst an dein jetziges HTML
+  script.js – reine Speisekarte
   - Modal (Name, Beschreibung, Preis)
   - Kategorienumschaltung
   - Karten mit "active"-Markierung
 */
 
 (function () {
-  // -------------------------
-  // Allgemeines Modal (Produkte)
-  // -------------------------
   const modal = document.getElementById('modal');
   const nameEl = document.getElementById('modal-name');
   const descEl = document.getElementById('modal-desc');
   const priceEl = document.getElementById('modal-price');
   const closeBtn = modal?.querySelector('.close');
 
-  let lastActiveCard = null; // zuletzt angeklickte Karte merken
+  let lastActiveCard = null;
 
-  function _setModalState(open, container = modal) {
-    if (!container) return;
-    container.style.display = open ? 'flex' : 'none';
-    container.setAttribute('aria-hidden', open ? 'false' : 'true');
+  function _setModalState(open) {
+    if (!modal) return;
+    modal.style.display = open ? 'flex' : 'none';
+    modal.setAttribute('aria-hidden', open ? 'false' : 'true');
     document.body.style.overflow = open ? 'hidden' : '';
   }
 
@@ -29,7 +26,7 @@
     nameEl.textContent = name || '';
     descEl.textContent = desc || '';
     priceEl.textContent = price || '';
-    _setModalState(true, modal);
+    _setModalState(true);
 
     if (closeBtn) closeBtn.focus();
 
@@ -41,12 +38,12 @@
   }
 
   function closeModal() {
-    _setModalState(false, modal);
+    _setModalState(false);
     if (lastActiveCard) lastActiveCard.focus();
   }
 
+  // Globale Funktion für inline onclick im HTML
   window.openModal = function (name, desc, price) {
-    // Karte anhand des Preises oder Titels ermitteln
     const allCards = document.querySelectorAll('.card');
     let cardMatch = null;
     allCards.forEach(c => {
@@ -61,9 +58,7 @@
 
   window.closeModal = closeModal;
 
-  // -------------------------
   // Kategorienumschaltung
-  // -------------------------
   window.showCategory = function (id, btn) {
     document.querySelectorAll('#menu .grid').forEach(div => {
       div.style.display = 'none';
@@ -75,29 +70,24 @@
     if (btn && btn.classList) btn.classList.add('active');
   };
 
-  // -------------------------
   // ESC & Overlay schließen
-  // -------------------------
   if (modal) {
-    modal.addEventListener('click', function (e) {
+    modal.addEventListener('click', e => {
       if (e.target === modal) closeModal();
     });
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
   }
 
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') {
-      if (modal && modal.getAttribute('aria-hidden') === 'false') closeModal();
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && modal?.getAttribute('aria-hidden') === 'false') {
+      closeModal();
     }
   });
 
-  // -------------------------
-  // Karten & Klick-Handling
-  // -------------------------
-  document.addEventListener('DOMContentLoaded', function () {
+  // Karten aktiv markieren
+  document.addEventListener('DOMContentLoaded', () => {
     const cards = document.querySelectorAll('.card');
 
-    // Damit auch ohne data-Attribute die "active"-Markierung gesetzt wird
     cards.forEach(card => {
       card.addEventListener('click', () => {
         document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
