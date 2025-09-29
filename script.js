@@ -1,9 +1,8 @@
 /*
-  script.js – final angepasst
-  - Speisekarten-Modal (Name, Beschreibung, Preis)
+  script.js – angepasst an dein jetziges HTML
+  - Modal (Name, Beschreibung, Preis)
   - Kategorienumschaltung
-  - Karten mit "active"-Markierung, die korrekt bleibt
-  - Eismobil (Modal oder Bereich)
+  - Karten mit "active"-Markierung
 */
 
 (function () {
@@ -35,9 +34,7 @@
     if (closeBtn) closeBtn.focus();
 
     if (card) {
-      // vorherige aktive Karte zurücksetzen
       document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
-      // neue Karte merken und markieren
       lastActiveCard = card;
       card.classList.add('active');
     }
@@ -45,14 +42,23 @@
 
   function closeModal() {
     _setModalState(false, modal);
-
-    // Fokus zurück auf zuletzt aktive Karte
-    if (lastActiveCard) {
-      lastActiveCard.focus();
-    }
+    if (lastActiveCard) lastActiveCard.focus();
   }
 
-  window.openModal = openModal;
+  window.openModal = function (name, desc, price) {
+    // Karte anhand des Preises oder Titels ermitteln
+    const allCards = document.querySelectorAll('.card');
+    let cardMatch = null;
+    allCards.forEach(c => {
+      const h3 = c.querySelector('h3')?.innerText;
+      const pr = c.querySelector('.price')?.innerText;
+      if (h3?.includes(name) || pr === price) {
+        cardMatch = c;
+      }
+    });
+    openModal(name, desc, price, cardMatch);
+  };
+
   window.closeModal = closeModal;
 
   // -------------------------
@@ -82,12 +88,6 @@
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
       if (modal && modal.getAttribute('aria-hidden') === 'false') closeModal();
-      const em = document.getElementById('eismobil-modal');
-      if (em && em.getAttribute('aria-hidden') === 'false') {
-        em.style.display = 'none';
-        em.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-      }
     }
   });
 
@@ -97,46 +97,17 @@
   document.addEventListener('DOMContentLoaded', function () {
     const cards = document.querySelectorAll('.card');
 
+    // Damit auch ohne data-Attribute die "active"-Markierung gesetzt wird
     cards.forEach(card => {
-      if (card.dataset && (card.dataset.name || card.dataset.price || card.dataset.desc)) {
-        if (!card.getAttribute('onclick')) {
-          card.addEventListener('click', function () {
-            const name = card.dataset.name || card.querySelector('h3')?.innerText || '';
-            const desc = card.dataset.desc || card.querySelector('p')?.innerText || '';
-            const price = card.dataset.price || card.querySelector('.price')?.innerText || '';
-            openModal(name, desc, price, card);
-          });
-        }
-      } else {
-        // Falls nur inline onclick → trotzdem active markieren
-        card.addEventListener('click', () => {
-          document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
-          lastActiveCard = card;
-          card.classList.add('active');
-        });
-      }
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+        lastActiveCard = card;
+        card.classList.add('active');
+      });
     });
 
     // Erste Kategorie beim Laden aktivieren
     const firstBtn = document.querySelector('.categories .btn.active');
     if (firstBtn && firstBtn.click) firstBtn.click();
-
-    if (eModal) {
-      const eClose = eModal.querySelector('.close');
-      if (eClose) eClose.addEventListener('click', () => {
-        eModal.style.display = 'none';
-        eModal.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-      });
-      eModal.addEventListener('click', (ev) => {
-        if (ev.target === eModal) {
-          eModal.style.display = 'none';
-          eModal.setAttribute('aria-hidden', 'true');
-          document.body.style.overflow = '';
-        }
-      });
-    }
   });
 })();
-
-
