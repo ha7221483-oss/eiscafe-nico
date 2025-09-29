@@ -20,10 +20,8 @@ section {
 h2 {
   font-family: 'Pacifico', cursive;
   color: #d35400;
-  margin-bottom: 10px; /* etwas weniger, damit der Hinweis näher dran ist */
+  margin-bottom: 10px;
 }
-
-/* Hinweis unter der Überschrift */
 .hint {
   font-size: 14px;
   color: #666;
@@ -100,6 +98,51 @@ h2 {
   font-weight: bold; 
   border: none; 
   background: none;
+}
+
+/* Logo Button */
+.logo-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.logo-img {
+  width: 120px;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+.site-title {
+  font-size: 28px;
+  font-family: 'Pacifico', cursive;
+  color: #d35400;
+}
+
+/* Slideshow */
+.slideshow-container {
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+}
+.slide {
+  display: none;
+}
+.slide img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Eismobil Modal */
+.modal-eismobil-img {
+  width: 100%;
+  max-width: 320px;
+  margin: 15px auto;
+  display: block;
+  border-radius: 12px;
 }
 
 /* Responsiv */
