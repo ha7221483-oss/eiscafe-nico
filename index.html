@@ -10,7 +10,12 @@
 </head>
 <body>
 
-<header>Eiscafé Nico</header>
+<header>
+  <button id="eismobil-logo" class="logo-button" aria-label="Eismobil / Eiscafé Nico" title="Eismobil - klicken für Infos">
+    <img src="Eismobil Bild.png" alt="Eismobil - Eiscafé Nico" class="logo-img">
+    <span class="site-title">Eiscafé Nico</span>
+  </button>
+</header>
 
 <section id="menu">
   <h2>Unsere Auswahl</h2>
@@ -210,6 +215,57 @@
 
 </section>
 
+<!-- Slideshow gallery -->
+<section id="slideshow" class="slideshow-section" aria-label="Bildergalerie">
+  <h2>Bildergalerie</h2>
+  <div class="slideshow-container" aria-live="polite">
+    <div class="slide"><img src="Logo Bild1.png" alt="Eisbecher"></div>
+    <div class="slide"><img src="Eismobil Bild.png" alt="Eismobil"></div>
+    <div class="slide"><img src="Holzstatue.png" alt="Holzstatue"></div>
+  </div>
+</section>
+
+<!-- Über uns / Infos -->
+<section id="info" class="info-section">
+  <h2>Über uns</h2>
+  <p>Genießen Sie Original handgemachte italienische Eisspezialitäten – laktosefrei, glutenfrei und auch milchfreies Eis verfügbar.</p>
+  <p>Außerdem bieten wir hausgemachte Torten, täglich wechselnd.</p>
+
+  <h3>Adresse</h3>
+  <p>📍 Ernst-Thälmann-Straße 1A<br>17268 Templin</p>
+
+  <h3>Öffnungszeiten</h3>
+  <ul class="opening-hours">
+    <li>Montag: 13:00 – 18:00</li>
+    <li>Dienstag: 13:00 – 18:00</li>
+    <li>Mittwoch: geschlossen</li>
+    <li>Donnerstag: 13:00 – 18:00</li>
+    <li>Freitag: 13:00 – 18:00</li>
+    <li>Samstag: 14:00 – 18:00</li>
+    <li>Sonntag: 14:00 – 18:00</li>
+  </ul>
+  <p><strong>Winterpause:</strong> Anfang November bis Ende Februar</p>
+</section>
+
+<!-- Eismobil Modal -->
+<div id="eismobil-modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="eismobil-title">
+  <div class="modal-content">
+    <button class="close" aria-label="Schließen">&times;</button>
+    <h3 id="eismobil-title">Unser Eismobil buchen</h3>
+
+    <img src="Eismobil Bild.png" alt="Eismobil" class="modal-eismobil-img">
+
+    <p>Unser Eismobil ist buchbar für Feste, Märkte und private Feiern. Wir bringen Eis, Personal und Zubehör mit.</p>
+
+    <ul>
+      <li>Telefon: <a href="tel:+4939874944212">03987 4944212</a></li>
+      <li>Email: <a href="mailto:info@eiscafenico.de?subject=Eismobil%20Buchung">info@eiscafenico.de</a></li>
+    </ul>
+
+    <button id="book-eismobil" class="btn">Buchungsanfrage per E-Mail</button>
+  </div>
+</div>
+
 <!-- Modal -->
 <div id="modal" class="modal" aria-hidden="true">
   <div class="modal-content">
@@ -219,6 +275,20 @@
     <p id="modal-price" class="price"></p>
   </div>
 </div>
+
+<!-- Google Maps -->
+<section id="map" class="map-section">
+  <h2>Hier finden Sie uns</h2>
+  <iframe 
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2436.7468700159026!2d13.4976848!3d53.1218508!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a95e26a2c07c5d%3A0x64f31b81c9a7e36a!2sErnst-Th%C3%A4lmann-Stra%C3%9Fe%201A%2C%2017268%20Templin!5e0!3m2!1sde!2sde!4v1699800000000!5m2!1sde!2sde" 
+    width="100%" 
+    height="400" 
+    style="border:0;border-radius:12px;" 
+    allowfullscreen="" 
+    loading="lazy" 
+    referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
+</section>
 
 <script src="script.js"></script>
 </body>
