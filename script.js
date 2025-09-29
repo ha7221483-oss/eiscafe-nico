@@ -1,10 +1,9 @@
 /*
-  script.js – angepasst
+  script.js – final angepasst
   - Speisekarten-Modal (Name, Beschreibung, Preis)
-  - Kategorienumschaltung (showCategory)
-  - Karten-Click-Fallback (data-* oder inline onclick)
-  - Eismobil-Logik (Modal oder Section)
-  - Fokusfix: nach Schließen zurück zur zuletzt geöffneten Karte
+  - Kategorienumschaltung
+  - Karten mit "active"-Markierung, die korrekt bleibt
+  - Eismobil (Modal oder Bereich)
 */
 
 (function () {
@@ -17,8 +16,7 @@
   const priceEl = document.getElementById('modal-price');
   const closeBtn = modal?.querySelector('.close');
 
-  // Merker für zuletzt geklickte Karte
-  let lastFocusedCard = null;
+  let lastActiveCard = null; // zuletzt angeklickte Karte merken
 
   function _setModalState(open, container = modal) {
     if (!container) return;
@@ -27,34 +25,39 @@
     document.body.style.overflow = open ? 'hidden' : '';
   }
 
-  function openModal(name, desc, price, triggerEl) {
+  function openModal(name, desc, price, card = null) {
     if (!modal) return;
     nameEl.textContent = name || '';
     descEl.textContent = desc || '';
     priceEl.textContent = price || '';
     _setModalState(true, modal);
 
-    // merken, wer Modal geöffnet hat
-    lastFocusedCard = triggerEl || null;
-
     if (closeBtn) closeBtn.focus();
+
+    if (card) {
+      // vorherige aktive Karte zurücksetzen
+      document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+      // neue Karte merken und markieren
+      lastActiveCard = card;
+      card.classList.add('active');
+    }
   }
 
   function closeModal() {
     _setModalState(false, modal);
 
-    // Fokus zurücksetzen
-    if (lastFocusedCard) {
-      lastFocusedCard.focus();
-      lastFocusedCard = null;
+    // Fokus zurück auf zuletzt aktive Karte
+    if (lastActiveCard) {
+      lastActiveCard.focus();
     }
   }
 
-  // Exponiere global für inline onclick
   window.openModal = openModal;
   window.closeModal = closeModal;
 
-  // showCategory
+  // -------------------------
+  // Kategorienumschaltung
+  // -------------------------
   window.showCategory = function (id, btn) {
     document.querySelectorAll('#menu .grid').forEach(div => {
       div.style.display = 'none';
@@ -66,15 +69,17 @@
     if (btn && btn.classList) btn.classList.add('active');
   };
 
-  // Modal: Overlay-Klick & ESC
+  // -------------------------
+  // ESC & Overlay schließen
+  // -------------------------
   if (modal) {
-    modal.addEventListener('click', e => {
+    modal.addEventListener('click', function (e) {
       if (e.target === modal) closeModal();
     });
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
   }
 
-  document.addEventListener('keydown', e => {
+  document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
       if (modal && modal.getAttribute('aria-hidden') === 'false') closeModal();
       const em = document.getElementById('eismobil-modal');
@@ -87,35 +92,34 @@
   });
 
   // -------------------------
-  // Karten / progressive enhancement
+  // Karten & Klick-Handling
   // -------------------------
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.card').forEach(card => {
+  document.addEventListener('DOMContentLoaded', function () {
+    const cards = document.querySelectorAll('.card');
+
+    cards.forEach(card => {
       if (card.dataset && (card.dataset.name || card.dataset.price || card.dataset.desc)) {
         if (!card.getAttribute('onclick')) {
           card.addEventListener('click', function () {
             const name = card.dataset.name || card.querySelector('h3')?.innerText || '';
             const desc = card.dataset.desc || card.querySelector('p')?.innerText || '';
             const price = card.dataset.price || card.querySelector('.price')?.innerText || '';
-            openModal(name, desc, price, card); // card mitgeben
+            openModal(name, desc, price, card);
           });
         }
       } else {
-        // falls onclick im HTML genutzt wird → ebenfalls triggerEl übergeben
-        const origClick = card.getAttribute('onclick');
-        if (origClick && origClick.includes('openModal')) {
-          card.addEventListener('click', () => {
-            lastFocusedCard = card;
-          });
-        }
+        // Falls nur inline onclick → trotzdem active markieren
+        card.addEventListener('click', () => {
+          document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+          lastActiveCard = card;
+          card.classList.add('active');
+        });
       }
     });
 
-    // erste Kategorie aktivieren
+    // Erste Kategorie beim Laden aktivieren
     const firstBtn = document.querySelector('.categories .btn.active');
-    if (firstBtn) {
-      if (firstBtn.click) firstBtn.click();
-    }
+    if (firstBtn && firstBtn.click) firstBtn.click();
 
     // -------------------------
     // Eismobil
@@ -134,11 +138,16 @@
           if (emClose) emClose.focus();
           return;
         }
+
         if (eSection) {
           const expanded = eSection.classList.toggle('expanded');
           if (expanded) {
             eSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
           }
+        } else {
+          const subject = encodeURIComponent('Eismobil Buchungsanfrage');
+          const body = encodeURIComponent('Hallo,%0A%0Aich möchte das Eismobil buchen. Bitte melden Sie sich bei mir.%0A%0ADatum:%0AOrt:%0AAnzahl Personen:%0A%0AMit freundlichen Grüßen,');
+          window.location.href = `mailto:info@eiscafenico.de?subject=${subject}&body=${body}`;
         }
       });
     }
@@ -147,7 +156,7 @@
     if (bookBtn) {
       bookBtn.addEventListener('click', function () {
         const subject = encodeURIComponent('Eismobil Buchungsanfrage');
-        const body = encodeURIComponent('Hallo,%0A%0Aich möchte das Eismobil buchen.%0A%0ADatum:%0AOrt:%0AAnzahl Personen:%0A%0AMit freundlichen Grüßen,');
+        const body = encodeURIComponent('Hallo,%0A%0Aich möchte das Eismobil buchen. Bitte melden Sie sich bei mir.%0A%0ADatum:%0AOrt:%0AAnzahl Personen:%0A%0AMit freundlichen Grüßen,');
         window.location.href = `mailto:info@eiscafenico.de?subject=${subject}&body=${body}`;
       });
     }
@@ -159,7 +168,7 @@
         eModal.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
       });
-      eModal.addEventListener('click', ev => {
+      eModal.addEventListener('click', (ev) => {
         if (ev.target === eModal) {
           eModal.style.display = 'none';
           eModal.setAttribute('aria-hidden', 'true');
@@ -169,4 +178,5 @@
     }
   });
 })();
+
 
