@@ -121,46 +121,6 @@
     const firstBtn = document.querySelector('.categories .btn.active');
     if (firstBtn && firstBtn.click) firstBtn.click();
 
-    // -------------------------
-    // Eismobil
-    // -------------------------
-    const eImg = document.querySelector('.eismobil-img');
-    const eSection = document.getElementById('eismobil');
-    const eModal = document.getElementById('eismobil-modal');
-
-    if (eImg) {
-      eImg.addEventListener('click', function () {
-        if (eModal) {
-          eModal.style.display = 'flex';
-          eModal.setAttribute('aria-hidden', 'false');
-          document.body.style.overflow = 'hidden';
-          const emClose = eModal.querySelector('.close');
-          if (emClose) emClose.focus();
-          return;
-        }
-
-        if (eSection) {
-          const expanded = eSection.classList.toggle('expanded');
-          if (expanded) {
-            eSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-        } else {
-          const subject = encodeURIComponent('Eismobil Buchungsanfrage');
-          const body = encodeURIComponent('Hallo,%0A%0Aich möchte das Eismobil buchen. Bitte melden Sie sich bei mir.%0A%0ADatum:%0AOrt:%0AAnzahl Personen:%0A%0AMit freundlichen Grüßen,');
-          window.location.href = `mailto:info@eiscafenico.de?subject=${subject}&body=${body}`;
-        }
-      });
-    }
-
-    const bookBtn = document.getElementById('book-eismobil');
-    if (bookBtn) {
-      bookBtn.addEventListener('click', function () {
-        const subject = encodeURIComponent('Eismobil Buchungsanfrage');
-        const body = encodeURIComponent('Hallo,%0A%0Aich möchte das Eismobil buchen. Bitte melden Sie sich bei mir.%0A%0ADatum:%0AOrt:%0AAnzahl Personen:%0A%0AMit freundlichen Grüßen,');
-        window.location.href = `mailto:info@eiscafenico.de?subject=${subject}&body=${body}`;
-      });
-    }
-
     if (eModal) {
       const eClose = eModal.querySelector('.close');
       if (eClose) eClose.addEventListener('click', () => {
