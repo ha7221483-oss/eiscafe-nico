@@ -1,49 +1,54 @@
-/* ---------- Allgemein ---------- */
+/* ---------- Grundlayout ---------- */
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background-color: #fdf0f0; /* sanftes Pastell-Rosé */
+  background-color: #f2d6d6; /* dunklerer warmer Hintergrund */
   color: #333;
   -webkit-tap-highlight-color: transparent;
 }
 
 /* ---------- Header ---------- */
 header {
-  background: linear-gradient(135deg, #f8b6b6, #fcd0c0);
+  background: linear-gradient(135deg, #b83a3a, #d84c4c);
   padding: 60px 20px;
   text-align: center;
   font-family: 'Pacifico', cursive;
   font-size: 42px;
-  color: #c0392b; /* kräftiges Himbeerrot */
+  color: #fff;
   position: relative;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
 }
 header::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(255,255,255,0.15); /* leichter Glanz */
+  background: rgba(255, 255, 255, 0.1);
 }
 header * { position: relative; }
 
-/* ---------- Überschriften ---------- */
+/* ---------- Abschnitt ---------- */
+section {
+  padding: 50px 20px;
+  text-align: center;
+}
+
 h2 {
   font-family: 'Pacifico', cursive;
-  color: #c0392b;
+  color: #fff;
   margin-bottom: 10px;
 }
 .hint {
   font-size: 14px;
-  color: #666;
+  color: #fdfdfd;
   margin-bottom: 20px;
   font-style: italic;
 }
 
-/* ---------- Kategorien-Buttons ---------- */
+/* ---------- Kategorien Buttons ---------- */
 .categories {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
   justify-content: center;
   margin-bottom: 25px;
 }
@@ -63,10 +68,10 @@ h2 {
   background: linear-gradient(135deg, #d35400, #e67e22);
 }
 .btn.active {
-  box-shadow: 0 0 10px rgba(230,126,34,0.5);
+  box-shadow: 0 0 10px rgba(230,126,34,0.7);
 }
 
-/* ---------- Produktkarten ---------- */
+/* ---------- Karten (Produkte) ---------- */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -74,18 +79,21 @@ h2 {
   max-width: 1100px;
   margin: 0 auto;
 }
+
 .card {
-  background: linear-gradient(145deg, #fff5f5, #ffe0d1);
+  background: linear-gradient(145deg, #fffdfd, #fcefe9); /* hellere Karten */
   border-radius: 20px;
   padding: 20px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
   cursor: pointer;
-  transition: all 0.3s ease;
   text-align: center;
+  transition: all 0.3s ease;
+  animation: cardFadeIn 0.6s ease forwards; /* Animation beim Laden */
+  opacity: 0;
 }
 .card:hover {
   transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.18);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
 }
 .card.active {
   transform: scale(1.05);
@@ -101,6 +109,18 @@ h2 {
   font-size: 18px;
 }
 
+/* ---------- Karten-Animation ---------- */
+@keyframes cardFadeIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 /* ---------- Modal ---------- */
 .modal {
   display: none;
@@ -112,9 +132,9 @@ h2 {
   z-index: 1000;
   padding: 20px;
 }
-.modal[aria-hidden="false"] { display: flex; }
+.modal[aria-hidden="false"] { display:flex; }
 .modal-content {
-  background: #fffdfd;
+  background-color: #fffdfd;
   padding: 30px;
   border-radius: 20px;
   max-width: 450px;
@@ -132,29 +152,10 @@ h2 {
   font-weight: bold;
   border: none;
   background: none;
-  color: #888;
+  color: #666;
+  transition: color 0.2s ease;
 }
-.close:hover { color: #c0392b; }
-
-/* ---------- Logo-Button ---------- */
-.logo-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.logo-img {
-  width: 130px;
-  border-radius: 15px;
-  margin-bottom: 12px;
-}
-.site-title {
-  font-size: 28px;
-  font-family: 'Pacifico', cursive;
-  color: #c0392b;
-}
+.close:hover { color: #d35400; }
 
 /* ---------- Responsiv ---------- */
 @media (max-width: 480px) {
