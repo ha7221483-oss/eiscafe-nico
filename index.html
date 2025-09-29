@@ -10,11 +10,10 @@
 </head>
 <body>
 
-<header>
-  <button id="eismobil-logo" class="logo-button" aria-label="Eismobil / Eiscafé Nico" title="Eismobil - klicken für Infos">
-    <img src="Eismobil Bild.png" alt="Eismobil - Eiscafé Nico" class="logo-img">
-    <span class="site-title">Eiscafé Nico</span>
-  </button>
+<header style="background: url('Logo Bild.png') no-repeat center center; background-size: cover; height: 250px; display: flex; justify-content: center; align-items: center; border-bottom: 5px solid #ffdca8;">
+  <h1 class="site-title" style="font-family: 'Pacifico', cursive; font-size: 3rem; color: white; text-shadow: 2px 2px 6px rgba(0,0,0,0.6);">
+    Eiscafé Nico
+  </h1>
 </header>
 
 <section id="menu">
@@ -219,9 +218,9 @@
 <section id="slideshow" class="slideshow-section" aria-label="Bildergalerie">
   <h2>Bildergalerie</h2>
   <div class="slideshow-container" aria-live="polite">
-    <div class="slide"><img src="Logo Bild1.png" alt="Eisbecher"></div>
-    <div class="slide"><img src="Eismobil Bild.png" alt="Eismobil"></div>
-    <div class="slide"><img src="Holzstatue.png" alt="Holzstatue"></div>
+    <div class="slide"><img src="images/logo-bild1.png" alt="Eisbecher"></div>
+    <div class="slide"><img src="images/eismobil-bild.png" alt="Eismobil"></div>
+    <div class="slide"><img src="images/holzstatue.png" alt="Holzstatue"></div>
   </div>
 </section>
 
@@ -253,7 +252,7 @@
     <button class="close" aria-label="Schließen">&times;</button>
     <h3 id="eismobil-title">Unser Eismobil buchen</h3>
 
-    <img src="Eismobil Bild.png" alt="Eismobil" class="modal-eismobil-img">
+    <img src="images/eismobil-bild.png" alt="Eismobil" class="modal-eismobil-img">
 
     <p>Unser Eismobil ist buchbar für Feste, Märkte und private Feiern. Wir bringen Eis, Personal und Zubehör mit.</p>
 
@@ -266,7 +265,7 @@
   </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal für Menüpunkte -->
 <div id="modal" class="modal" aria-hidden="true">
   <div class="modal-content">
     <button class="close" aria-label="Schließen">&times;</button>
@@ -293,3 +292,4 @@
 <script src="script.js"></script>
 </body>
 </html>
+
