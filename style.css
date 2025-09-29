@@ -4,11 +4,12 @@ body {
   font-family: 'Poppins', sans-serif;
   background-color: #fff8f0;
   color: #333;
+  -webkit-tap-highlight-color: transparent; /* kein blauer Effekt */
 }
 
 /* Header + Logo mit Hintergrund */
 header {
-  background: url('hintergrundbild.jpg') no-repeat center/cover;
+  background: url('images/logo-bild1.png') no-repeat center/cover;
   padding: 60px 20px;
   text-align: center;
   font-family: 'Pacifico', cursive;
@@ -53,13 +54,13 @@ h2 {
   margin: 0 auto;
 }
 .card {
-  /* alter Hintergrund: #fff3e0 */
   background: linear-gradient(145deg, #fff3e0 70%, #ffbfbf 30%);
   border-radius: 15px;
   padding: 20px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.12);
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+  outline: none !important;
 }
 .card:hover {
   transform: translateY(-5px);
@@ -92,6 +93,7 @@ h2 {
   border-radius: 10px;
   cursor: pointer;
   transition: background 0.2s;
+  outline: none !important;
 }
 .btn:hover { background-color: #d35400; }
 .btn.active { background-color: #d35400; }
@@ -136,6 +138,7 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
+  outline: none !important;
 }
 .logo-img {
   width: 120px;
