@@ -1,12 +1,13 @@
-
 /*
-  Kompatibles script.js —
-  - stellt globale Funktionen `openModal`, `closeModal`, `showCategory` bereit (sodass inline onclick(...) funktioniert)
-  - schließt Modal bei Klick auf Overlay & ESC
-  - unterstützt sowohl inline onclick-Handler als auch data-* Karten
+  script.js – Eiscafé Nico
+  - Speisekarten-Modal (Name, Beschreibung, Preis)
+  - Kategorienumschaltung
+  - Eismobil-Modal (Logo klickbar)
+  - Slideshow mit Auto-Play
 */
+
 (function () {
-  // Helfer-Elemente
+  // === Allgemeines Modal für Speisekarte ===
   const modal = document.getElementById('modal');
   const nameEl = document.getElementById('modal-name');
   const descEl = document.getElementById('modal-desc');
@@ -26,7 +27,6 @@
     descEl.textContent = desc || '';
     priceEl.textContent = price || '';
     _setModalState(true);
-    // Fokus auf Schließen-Button für Zugänglichkeit
     if (closeBtn) closeBtn.focus();
   }
 
@@ -34,7 +34,6 @@
     _setModalState(false);
   }
 
-  // Öffentlich (global) verfügbar machen — kompatibel mit inline onclick="openModal(...)" aus deinem HTML
   window.openModal = openModal;
   window.closeModal = closeModal;
   window.showCategory = function (id, btn) {
@@ -48,7 +47,6 @@
     if (btn && btn.classList) btn.classList.add('active');
   };
 
-  // Overlay-Klick und ESC
   if (modal) {
     modal.addEventListener('click', function (e) {
       if (e.target === modal) closeModal();
@@ -59,12 +57,9 @@
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
   }
 
-  // Falls Karten data-* statt onclick benutzen: Füge Fallback-Listener hinzu (progressive enhancement)
   document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.card').forEach(card => {
-      // Wenn Karte data-name hat und keine inline-onclick (für bessere Kompatibilität), dann Listener hinzufügen
       if (card.dataset && (card.dataset.name || card.dataset.price)) {
-        // wenn bereits ein inline onclick existiert, skip (nutzt user's handler)
         if (!card.getAttribute('onclick')) {
           card.addEventListener('click', function () {
             const name = card.dataset.name || card.querySelector('h3')?.innerText || '';
@@ -76,11 +71,56 @@
       }
     });
 
-    // initial: erste sichtbare Kategorie sicherstellen
     const firstBtn = document.querySelector('.categories .btn.active');
     if (firstBtn) {
-      // benutze showCategory damit Klassen & Sichtbarkeit konsistent sind
       firstBtn.click && firstBtn.click();
     }
   });
+
+  // === Eismobil Modal ===
+  const eismobilLogo = document.getElementById('eismobil-logo');
+  const eismobilModal = document.getElementById('eismobil-modal');
+  const eismobilClose = eismobilModal?.querySelector('.close');
+
+  function openEismobilModal() {
+    if (!eismobilModal) return;
+    eismobilModal.style.display = 'flex';
+    eismobilModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeEismobilModal() {
+    if (!eismobilModal) return;
+    eismobilModal.style.display = 'none';
+    eismobilModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+  if (eismobilLogo) eismobilLogo.addEventListener('click', openEismobilModal);
+  if (eismobilClose) eismobilClose.addEventListener('click', closeEismobilModal);
+  if (eismobilModal) {
+    eismobilModal.addEventListener('click', e => {
+      if (e.target === eismobilModal) closeEismobilModal();
+    });
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeEismobilModal();
+  });
+
+  // === Slideshow Auto-Play ===
+  document.addEventListener('DOMContentLoaded', () => {
+    const slides = document.querySelectorAll('#slideshow .slide');
+    let index = 0;
+    function showSlide(i) {
+      slides.forEach((s, j) => {
+        s.style.display = j === i ? 'block' : 'none';
+      });
+    }
+    if (slides.length > 0) {
+      showSlide(index);
+      setInterval(() => {
+        index = (index + 1) % slides.length;
+        showSlide(index);
+      }, 4000);
+    }
+  });
 })();
+
