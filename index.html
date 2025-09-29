@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<header style="background: url('Logo Bild.png') no-repeat center center; background-size: cover; height: 250px; display: flex; justify-content: center; align-items: center; border-bottom: 5px solid #ffdca8;">
+<header style="background: url('images/logo-bild.png') no-repeat center center; background-size: cover; height: 250px; display: flex; justify-content: center; align-items: center; border-bottom: 5px solid #ffdca8;">
   <h1 class="site-title" style="font-family: 'Pacifico', cursive; font-size: 3rem; color: white; text-shadow: 2px 2px 6px rgba(0,0,0,0.6);">
     Eiscafé Nico
   </h1>
@@ -214,16 +214,6 @@
 
 </section>
 
-<!-- Slideshow gallery -->
-<section id="slideshow" class="slideshow-section" aria-label="Bildergalerie">
-  <h2>Bildergalerie</h2>
-  <div class="slideshow-container" aria-live="polite">
-    <div class="slide"><img src="images/logo-bild1.png" alt="Eisbecher"></div>
-    <div class="slide"><img src="images/eismobil-bild.png" alt="Eismobil"></div>
-    <div class="slide"><img src="images/holzstatue.png" alt="Holzstatue"></div>
-  </div>
-</section>
-
 <!-- Über uns / Infos -->
 <section id="info" class="info-section">
   <h2>Über uns</h2>
@@ -246,24 +236,18 @@
   <p><strong>Winterpause:</strong> Anfang November bis Ende Februar</p>
 </section>
 
-<!-- Eismobil Modal -->
-<div id="eismobil-modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="eismobil-title">
-  <div class="modal-content">
-    <button class="close" aria-label="Schließen">&times;</button>
-    <h3 id="eismobil-title">Unser Eismobil buchen</h3>
+<section id="eismobil" class="eismobil-section">
+  <h2>Eismobil buchen</h2>
+  <img src="images/eismobil-bild.png" alt="Eismobil" class="eismobil-img">
+  <p>Unser Eismobil ist buchbar für Feste, Märkte und private Feiern. Wir bringen Eis, Personal und Zubehör mit.</p>
 
-    <img src="images/eismobil-bild.png" alt="Eismobil" class="modal-eismobil-img">
+  <ul>
+    <li>📞 Telefon: <a href="tel:+4939874944212">03987 4944212</a></li>
+    <li>✉️ Email: <a href="mailto:info@eiscafenico.de?subject=Eismobil%20Buchung">info@eiscafenico.de</a></li>
+  </ul>
 
-    <p>Unser Eismobil ist buchbar für Feste, Märkte und private Feiern. Wir bringen Eis, Personal und Zubehör mit.</p>
-
-    <ul>
-      <li>Telefon: <a href="tel:+4939874944212">03987 4944212</a></li>
-      <li>Email: <a href="mailto:info@eiscafenico.de?subject=Eismobil%20Buchung">info@eiscafenico.de</a></li>
-    </ul>
-
-    <button id="book-eismobil" class="btn">Buchungsanfrage per E-Mail</button>
-  </div>
-</div>
+  <button class="btn">Buchungsanfrage per E-Mail</button>
+</section>
 
 <!-- Modal für Menüpunkte -->
 <div id="modal" class="modal" aria-hidden="true">
