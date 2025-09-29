@@ -4,7 +4,7 @@ body {
   font-family: 'Poppins', sans-serif;
   background-color: #fff8f0;
   color: #333;
-  -webkit-tap-highlight-color: transparent; /* kein blauer Effekt */
+  -webkit-tap-highlight-color: transparent; /* kein blauer Effekt auf Touch */
 }
 
 /* Header + Logo mit Hintergrund */
@@ -21,10 +21,10 @@ header::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(255, 220, 168, 0.3); /* etwas transparenter */
+  background: rgba(255, 220, 168, 0.3); /* Overlay-Effekt */
 }
 header * {
-  position: relative; /* sorgt dafür, dass Inhalt vor Overlay steht */
+  position: relative; /* Inhalt über Overlay */
 }
 
 section {
@@ -65,13 +65,13 @@ h2 {
 .card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 18px rgba(0,0,0,0.15);
-  background: linear-gradient(145deg, #ffbfbf 70%, #fff3e0 30%);
 }
 /* Aktiver Zustand */
 .card.active {
   transform: scale(1.05);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.25);
   background: linear-gradient(145deg, #ffbfbf 70%, #fff3e0 30%);
+  border: 2px solid #e67e22;
 }
 .card h3 { 
   margin: 5px 0; 
