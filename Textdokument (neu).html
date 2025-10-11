@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Genshin Figuren Manager</title>
+  <meta name="description" content="Web-App: Figuren, Waffen & Artefakte. Offline & GitHub Pages ready." />
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="app">
+    <header class="top">
+      <div class="logo">GI</div>
+      <div class="title">
+        <h1>Genshin Figuren Manager</h1>
+        <p class="lead">Einfach Figuren, Waffen & Artefakte verwalten — GitHub Pages & PWA-ready</p>
+      </div>
+    </header>
+
+    <main class="grid">
+      <section class="card form">
+        <div class="row top-row">
+          <div class="col">
+            <label>Charakter</label>
+            <select id="charSelect"></select>
+          </div>
+          <div class="col small">
+            <label>Level</label>
+            <select id="levelSelect"></select>
+          </div>
+          <div class="col small">
+            <label>Waffe Lvl</label>
+            <select id="weaponLevel"></select>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <label>Max. LP</label>
+            <input id="hp" type="number" />
+          </div>
+          <div class="stat">
+            <label>Angriff</label>
+            <input id="atk" type="number" />
+          </div>
+          <div class="stat">
+            <label>Verteidigung</label>
+            <input id="def" type="number" />
+          </div>
+          <div class="stat">
+            <label>Elementarkunde</label>
+            <input id="em" type="number" />
+          </div>
+          <div class="stat">
+            <label>KT (Crit Rate %)</label>
+            <input id="cr" type="number" />
+          </div>
+          <div class="stat">
+            <label>Kritischer Schaden %</label>
+            <input id="cd" type="number" />
+          </div>
+          <div class="stat">
+            <label>Heilbonus %</label>
+            <input id="hb" type="number" />
+          </div>
+          <div class="stat">
+            <label>Aufladerate %</label>
+            <input id="er" type="number" />
+          </div>
+        </div>
+
+        <details class="panel" open>
+          <summary>Artefakte (Haupt- & Nebenstats)</summary>
+          <div id="artifacts" class="artifacts"></div>
+          <button id="addSet" class="btn secondary">Artefakt setzen hinzufügen</button>
+        </details>
+
+        <details class="panel">
+          <summary>Waffe</summary>
+          <div class="panel-inner">
+            <label>Waffenname</label>
+            <input id="weaponName" placeholder="z. B. Staff of Homa" />
+            <label>Waffen Hauptattribut</label>
+            <input id="weaponMain" placeholder="z. B. ATK% / ER / Pyro DMG" />
+          </div>
+        </details>
+
+        <div class="actions">
+          <button id="calc" class="btn primary">Berechnen</button>
+          <button id="save" class="btn">Speichern (Local)</button>
+          <button id="export" class="btn">Export JSON</button>
+          <div class="result">
+            <div id="score">Gesamtstärke: —</div>
+            <div class="muted">Bewertung: gewichtete Heuristik</div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="card sidebar">
+        <div class="overview">
+          <div class="muted">Aktueller Charakter</div>
+          <div id="overviewName" class="big">—</div>
+          <div id="overviewLevel" class="muted">—</div>
+        </div>
+
+        <div class="components">
+          <h4>Komponenten</h4>
+          <div id="detailList" class="muted">Noch keine Berechnung</div>
+        </div>
+
+        <div class="controls">
+          <button id="loadExample" class="btn">Beispiel laden (Hu Tao)</button>
+          <button id="clear" class="btn">Zurücksetzen</button>
+          <button id="downloadZip" class="btn">Download Projekt (ZIP)</button>
+        </div>
+
+        <footer class="muted small">Zieh das Projekt zu GitHub und aktiviere Pages. PWA-Installation wird unterstützt.</footer>
+      </aside>
+    </main>
+
+    <div id="toast" class="toast" hidden></div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
