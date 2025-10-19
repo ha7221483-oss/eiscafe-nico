@@ -1,0 +1,647 @@
+[
+  {
+    "de": "Hallo",
+    "ar": "مرحبًا",
+    "cat": "Begrüßung"
+  },
+  {
+    "de": "Guten Morgen",
+    "ar": "صباح الخير",
+    "cat": "Begrüßung"
+  },
+  {
+    "de": "Guten Abend",
+    "ar": "مساء الخير",
+    "cat": "Begrüßung"
+  },
+  {
+    "de": "Tschüss",
+    "ar": "مع السلامة",
+    "cat": "Begrüßung"
+  },
+  {
+    "de": "Wie geht es dir?",
+    "ar": "كيف حالك؟",
+    "cat": "Begrüßung"
+  },
+  {
+    "de": "Mir geht's gut, danke.",
+    "ar": "أنا بخير، شكرًا.",
+    "cat": "Begrüßung"
+  },
+  {
+    "de": "Und dir?",
+    "ar": "وأنت؟",
+    "cat": "Begrüßung"
+  },
+  {
+    "de": "Bitte",
+    "ar": "من فضلك",
+    "cat": "Höflichkeit"
+  },
+  {
+    "de": "Danke",
+    "ar": "شكرًا",
+    "cat": "Höflichkeit"
+  },
+  {
+    "de": "Entschuldigung",
+    "ar": "عذرًا",
+    "cat": "Höflichkeit"
+  },
+  {
+    "de": "Kein Problem",
+    "ar": "لا مشكلة",
+    "cat": "Höflichkeit"
+  },
+  {
+    "de": "Ich heiße...",
+    "ar": "اسمي...",
+    "cat": "Vorstellung"
+  },
+  {
+    "de": "Wie heißt du?",
+    "ar": "ما اسمك؟",
+    "cat": "Vorstellung"
+  },
+  {
+    "de": "Ich komme aus...",
+    "ar": "أنا من...",
+    "cat": "Vorstellung"
+  },
+  {
+    "de": "Freut mich, dich kennenzulernen",
+    "ar": "سعيد بلقائك",
+    "cat": "Vorstellung"
+  },
+  {
+    "de": "Wo ist die Toilette?",
+    "ar": "أين الحمام؟",
+    "cat": "Unterwegs"
+  },
+  {
+    "de": "Wo ist der Bahnhof?",
+    "ar": "أين المحطة؟",
+    "cat": "Unterwegs"
+  },
+  {
+    "de": "Wie komme ich zum Supermarkt?",
+    "ar": "كيف أصل إلى السوبرماركت؟",
+    "cat": "Unterwegs"
+  },
+  {
+    "de": "Wieviel kostet das?",
+    "ar": "بكم هذا؟",
+    "cat": "Einkaufen"
+  },
+  {
+    "de": "Kann ich mit Karte zahlen?",
+    "ar": "هل يمكنني الدفع بالبطاقة؟",
+    "cat": "Einkaufen"
+  },
+  {
+    "de": "Ich hätte gern...",
+    "ar": "أود الحصول على...",
+    "cat": "Einkaufen"
+  },
+  {
+    "de": "Die Rechnung, bitte.",
+    "ar": "الفاتورة، من فضلك.",
+    "cat": "Einkaufen"
+  },
+  {
+    "de": "Hilfe!",
+    "ar": "النجدة!",
+    "cat": "Notfall"
+  },
+  {
+    "de": "Rufen Sie einen Arzt!",
+    "ar": "اتصل بطبيب!",
+    "cat": "Notfall"
+  },
+  {
+    "de": "Ich habe Schmerzen.",
+    "ar": "أشعر بألم.",
+    "cat": "Notfall"
+  },
+  {
+    "de": "Es ist dringend.",
+    "ar": "إنه عاجل.",
+    "cat": "Notfall"
+  },
+  {
+    "de": "Ich bin müde.",
+    "ar": "أنا متعب.",
+    "cat": "Gefühle"
+  },
+  {
+    "de": "Ich bin hungrig.",
+    "ar": "أنا جائع.",
+    "cat": "Gefühle"
+  },
+  {
+    "de": "Ich bin durstig.",
+    "ar": "أنا عطشان.",
+    "cat": "Gefühle"
+  },
+  {
+    "de": "Ich bin glücklich.",
+    "ar": "أنا سعيد.",
+    "cat": "Gefühle"
+  },
+  {
+    "de": "Ich bin traurig.",
+    "ar": "أنا حزين.",
+    "cat": "Gefühle"
+  },
+  {
+    "de": "Was machst du?",
+    "ar": "ماذا تفعل؟",
+    "cat": "Smalltalk"
+  },
+  {
+    "de": "Wollen wir da hingehen?",
+    "ar": "هل نذهب إلى هناك؟",
+    "cat": "Einladung"
+  },
+  {
+    "de": "Kommst du mit?",
+    "ar": "هل ستأتي معنا؟",
+    "cat": "Einladung"
+  },
+  {
+    "de": "Ich verstehe nicht.",
+    "ar": "لا أفهم.",
+    "cat": "Kommunikation"
+  },
+  {
+    "de": "Können Sie das bitte wiederholen?",
+    "ar": "هل يمكنك إعادة ذلك من فضلك؟",
+    "cat": "Kommunikation"
+  },
+  {
+    "de": "Langsamer bitte.",
+    "ar": "ببطء من فضلك.",
+    "cat": "Kommunikation"
+  },
+  {
+    "de": "Sprechen Sie Englisch?",
+    "ar": "هل تتحدث الإنجليزية؟",
+    "cat": "Kommunikation"
+  },
+  {
+    "de": "Ich spreche nur ein wenig Deutsch.",
+    "ar": "أتحدث الألمانية قليلاً فقط.",
+    "cat": "Kommunikation"
+  },
+  {
+    "de": "Wie spät ist es?",
+    "ar": "كم الساعة؟",
+    "cat": "Zeit"
+  },
+  {
+    "de": "Heute",
+    "ar": "اليوم",
+    "cat": "Zeit"
+  },
+  {
+    "de": "Morgen",
+    "ar": "غدًا",
+    "cat": "Zeit"
+  },
+  {
+    "de": "Gestern",
+    "ar": "أمس",
+    "cat": "Zeit"
+  },
+  {
+    "de": "Um wie viel Uhr?",
+    "ar": "في أي ساعة؟",
+    "cat": "Zeit"
+  },
+  {
+    "de": "Eins, zwei, drei",
+    "ar": "واحد، اثنان، ثلاثة",
+    "cat": "Zahlen"
+  },
+  {
+    "de": "Zehn, zwanzig, dreißig",
+    "ar": "عشرة، عشرون، ثلاثون",
+    "cat": "Zahlen"
+  },
+  {
+    "de": "Heute Abend",
+    "ar": "هذا المساء",
+    "cat": "Zeit"
+  },
+  {
+    "de": "Gleich hier",
+    "ar": "هنا قريبًا",
+    "cat": "Ort"
+  },
+  {
+    "de": "Links / Rechts",
+    "ar": "يسار / يمين",
+    "cat": "Ort"
+  },
+  {
+    "de": "Geradeaus",
+    "ar": "على طول",
+    "cat": "Ort"
+  },
+  {
+    "de": "Mein Haus",
+    "ar": "بيتي",
+    "cat": "Ort"
+  },
+  {
+    "de": "Die Straße",
+    "ar": "الشارع",
+    "cat": "Ort"
+  },
+  {
+    "de": "Der Supermarkt",
+    "ar": "السوبرماركت",
+    "cat": "Ort"
+  },
+  {
+    "de": "Das Krankenhaus",
+    "ar": "المستشفى",
+    "cat": "Ort"
+  },
+  {
+    "de": "Ich brauche Wasser.",
+    "ar": "أحتاج إلى ماء.",
+    "cat": "Grundbedürfnisse"
+  },
+  {
+    "de": "Ich habe Durst.",
+    "ar": "أنا عطشان.",
+    "cat": "Grundbedürfnisse"
+  },
+  {
+    "de": "Ich habe Hunger.",
+    "ar": "أنا جائع.",
+    "cat": "Grundbedürfnisse"
+  },
+  {
+    "de": "Kannst du mir helfen?",
+    "ar": "هل يمكنك مساعدتي؟",
+    "cat": "Hilfe"
+  },
+  {
+    "de": "Ich suche dieses Haus.",
+    "ar": "أبحث عن هذا المنزل.",
+    "cat": "Hilfe"
+  },
+  {
+    "de": "Rufen Sie die Polizei",
+    "ar": "اتصل بالشرطة",
+    "cat": "Notfall"
+  },
+  {
+    "de": "Ich habe meine Tasche verloren.",
+    "ar": "فقدت حقيبتي.",
+    "cat": "Hilfe"
+  },
+  {
+    "de": "Ich bin krank.",
+    "ar": "أنا مريض.",
+    "cat": "Gesundheit"
+  },
+  {
+    "de": "Brauchen Sie einen Arzt?",
+    "ar": "هل تحتاج إلى طبيب؟",
+    "cat": "Gesundheit"
+  },
+  {
+    "de": "Es tut weh hier.",
+    "ar": "يؤلمني هنا.",
+    "cat": "Gesundheit"
+  },
+  {
+    "de": "Ist das weit?",
+    "ar": "هل هذا بعيد؟",
+    "cat": "Unterwegs"
+  },
+  {
+    "de": "Ein Ticket bitte.",
+    "ar": "تذكرة من فضلك.",
+    "cat": "Transport"
+  },
+  {
+    "de": "Nächster Zug",
+    "ar": "القادم قطار",
+    "cat": "Transport"
+  },
+  {
+    "de": "Wann fährt der Bus?",
+    "ar": "متى يغادر الحافلة؟",
+    "cat": "Transport"
+  },
+  {
+    "de": "Ich hätte gern einen Kaffee.",
+    "ar": "أود فنجان قهوة.",
+    "cat": "Essen"
+  },
+  {
+    "de": "Das Essen ist lecker.",
+    "ar": "الطعام لذيذ.",
+    "cat": "Essen"
+  },
+  {
+    "de": "Die Speisekarte, bitte.",
+    "ar": "قائمة الطعام، من فضلك.",
+    "cat": "Essen"
+  },
+  {
+    "de": "Ich bin Vegetarier.",
+    "ar": "أنا نباتي.",
+    "cat": "Essen"
+  },
+  {
+    "de": "Rechnung getrennt, bitte.",
+    "ar": "الفاتورة منفصلة، من فضلك.",
+    "cat": "Einkaufen"
+  },
+  {
+    "de": "Ich nehme das.",
+    "ar": "سآخذ هذا.",
+    "cat": "Einkaufen"
+  },
+  {
+    "de": "Haben Sie das in einer anderen Größe?",
+    "ar": "هل لديكم هذا بمقاس آخر؟",
+    "cat": "Einkaufen"
+  },
+  {
+    "de": "Öffnen / geschlossen",
+    "ar": "مفتوح / مغلق",
+    "cat": "Alltag"
+  },
+  {
+    "de": "Ich arbeite.",
+    "ar": "أنا أعمل.",
+    "cat": "Alltag"
+  },
+  {
+    "de": "Ich lerne Deutsch.",
+    "ar": "أنا أتعلم الألمانية.",
+    "cat": "Alltag"
+  },
+  {
+    "de": "Ich habe einen Termin.",
+    "ar": "لدي موعد.",
+    "cat": "Alltag"
+  },
+  {
+    "de": "Heute habe ich frei.",
+    "ar": "لدي عطلة اليوم.",
+    "cat": "Alltag"
+  },
+  {
+    "de": "Kann ich Ihnen helfen?",
+    "ar": "هل يمكنني مساعدتك؟",
+    "cat": "Höflichkeit"
+  },
+  {
+    "de": "Was empfehlen Sie?",
+    "ar": "ما الذي تنصح به؟",
+    "cat": "Essen"
+  },
+  {
+    "de": "Ich möchte bezahlen.",
+    "ar": "أريد أن أدفع.",
+    "cat": "Einkaufen"
+  },
+  {
+    "de": "Ist das scharf?",
+    "ar": "هل هذا حار؟",
+    "cat": "Essen"
+  },
+  {
+    "de": "Ich habe eine Frage.",
+    "ar": "لدي سؤال.",
+    "cat": "Kommunikation"
+  },
+  {
+    "de": "Kannst du das erklären?",
+    "ar": "هل يمكنك شرح ذلك؟",
+    "cat": "Kommunikation"
+  },
+  {
+    "de": "Warte bitte.",
+    "ar": "انتظر من فضلك.",
+    "cat": "Kommunikation"
+  },
+  {
+    "de": "Ich bin gleich zurück.",
+    "ar": "سأعود قريبا.",
+    "cat": "Kommunikation"
+  },
+  {
+    "de": "Alles in Ordnung?",
+    "ar": "هل كل شيء على ما يرام؟",
+    "cat": "Gefühle"
+  },
+  {
+    "de": "Ich brauche Ruhe.",
+    "ar": "أحتاج إلى هدوء.",
+    "cat": "Gefühle"
+  },
+  {
+    "de": "Ich bin verloren.",
+    "ar": "أنا تائه.",
+    "cat": "Hilfe"
+  },
+  {
+    "de": "Kann ich hier parken?",
+    "ar": "هل أستطيع الوقوف هنا؟",
+    "cat": "Unterwegs"
+  },
+  {
+    "de": "Die nächste Haltestelle",
+    "ar": "المحطة التالية",
+    "cat": "Transport"
+  },
+  {
+    "de": "Ein Moment bitte.",
+    "ar": "لحظة من فضلك.",
+    "cat": "Kommunikation"
+  },
+  {
+    "de": "Ich habe keine Zeit.",
+    "ar": "ليس لدي وقت.",
+    "cat": "Alltag"
+  },
+  {
+    "de": "Wie heißt das auf Deutsch?",
+    "ar": "ما اسم هذا بالألمانية؟",
+    "cat": "Lernen"
+  },
+  {
+    "de": "Können Sie mir das Wort zeigen?",
+    "ar": "هل يمكنك إظهار الكلمة لي؟",
+    "cat": "Lernen"
+  },
+  {
+    "de": "Noch einmal, bitte.",
+    "ar": "مرة أخرى، من فضلك.",
+    "cat": "Kommunikation"
+  },
+  {
+    "de": "Ich mag das.",
+    "ar": "أحب هذا.",
+    "cat": "Gefühle"
+  },
+  {
+    "de": "Ich mag das nicht.",
+    "ar": "لا أحب هذا.",
+    "cat": "Gefühle"
+  },
+  {
+    "de": "Das ist wichtig.",
+    "ar": "هذا مهم.",
+    "cat": "Alltag"
+  },
+  {
+    "de": "Sei vorsichtig.",
+    "ar": "كن حذراً.",
+    "cat": "Sicherheit"
+  },
+  {
+    "de": "Ich bin allergisch gegen...",
+    "ar": "أنا أعاني من حساسية تجاه...",
+    "cat": "Gesundheit"
+  },
+  {
+    "de": "Kann ich das probieren?",
+    "ar": "هل يمكنني تجربته؟",
+    "cat": "Einkaufen"
+  },
+  {
+    "de": "Gute Reise!",
+    "ar": "رحلة سعيدة!",
+    "cat": "Verabschiedung"
+  },
+  {
+    "de": "Viel Erfolg!",
+    "ar": "حظاً طيباً!",
+    "cat": "Verabschiedung"
+  },
+  {
+    "de": "Herzlichen Glückwunsch!",
+    "ar": "مبروك!",
+    "cat": "Verabschiedung"
+  },
+  {
+    "de": "Was ist passiert?",
+    "ar": "ماذا حدث؟",
+    "cat": "Notfall"
+  },
+  {
+    "de": "Ruhig bleiben.",
+    "ar": "اهدأ.",
+    "cat": "Notfall"
+  },
+  {
+    "de": "Ich brauche einen Dolmetscher.",
+    "ar": "أحتاج إلى مترجم.",
+    "cat": "Hilfe"
+  },
+  {
+    "de": "Sprechen Sie langsam, bitte.",
+    "ar": "تحدث ببطء، من فضلك.",
+    "cat": "Kommunikation"
+  },
+  {
+    "de": "Ich hätte gern ein Wasser ohne Eis.",
+    "ar": "أريد ماء بدون ثلج.",
+    "cat": "Essen"
+  },
+  {
+    "de": "Darf ich hier fotografieren?",
+    "ar": "هل يمكنني التصوير هنا؟",
+    "cat": "Alltag"
+  },
+  {
+    "de": "Ist WLAN verfügbar?",
+    "ar": "هل يوجد واي فاي؟",
+    "cat": "Alltag"
+  },
+  {
+    "de": "Das ist mein Freund / meine Freundin.",
+    "ar": "هذا صديقي / صديقتي.",
+    "cat": "Vorstellung"
+  },
+  {
+    "de": "Ich wohne hier seit ...",
+    "ar": "أعيش هنا منذ ...",
+    "cat": "Vorstellung"
+  },
+  {
+    "de": "Kann ich einen Termin vereinbaren?",
+    "ar": "هل أستطيع تحديد موعد؟",
+    "cat": "Alltag"
+  },
+  {
+    "de": "Ich habe mein Handy verloren.",
+    "ar": "فقدت هاتفي.",
+    "cat": "Hilfe"
+  },
+  {
+    "de": "Ich bin beschäftigt.",
+    "ar": "أنا مشغول.",
+    "cat": "Alltag"
+  },
+  {
+    "de": "Kann ich das zurückgeben?",
+    "ar": "هل يمكنني إرجاع هذا؟",
+    "cat": "Einkaufen"
+  },
+  {
+    "de": "Das gefällt mir.",
+    "ar": "يعجبني هذا.",
+    "cat": "Gefühle"
+  },
+  {
+    "de": "Es ist schön hier.",
+    "ar": "الجو جميل هنا.",
+    "cat": "Alltag"
+  },
+  {
+    "de": "Ich warte auf dich.",
+    "ar": "أنا في انتظارك.",
+    "cat": "Kommunikation"
+  },
+  {
+    "de": "Haben Sie Empfehlungen in der Nähe?",
+    "ar": "هل لديك توصيات قريبة؟",
+    "cat": "Unterwegs"
+  },
+  {
+    "de": "Gibt es hier eine Apotheke?",
+    "ar": "هل هناك صيدلية هنا؟",
+    "cat": "Gesundheit"
+  },
+  {
+    "de": "Ich brauche eine Telefonnummer.",
+    "ar": "أحتاج إلى رقم هاتف.",
+    "cat": "Hilfe"
+  },
+  {
+    "de": "Das ist zu teuer.",
+    "ar": "هذا مكلف جدًا.",
+    "cat": "Einkaufen"
+  },
+  {
+    "de": "Haben Sie vegetarische Optionen?",
+    "ar": "هل لديكم خيارات نباتية؟",
+    "cat": "Essen"
+  },
+  {
+    "de": "Ich möchte mich anmelden.",
+    "ar": "أريد التسجيل.",
+    "cat": "Alltag"
+  }
+]
