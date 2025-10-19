@@ -1,0 +1,16 @@
+NOTICE - Third-Party Services and Licensing
+
+This project (Alltags-Deutsch) uses local browser Text-to-Speech (Web Speech API) and may link to third-party services
+(such as Google Translate) as a user-initiated fallback for audio playback.
+
+Important notes:
+- The application does NOT include or embed Google Translate audio programmatically. The "Übersetzer" button opens Google Translate
+  in a new browser tab so the user can use Google's interface and audio playback directly. This usage is initiated by the user.
+- Google Translate and its audio services are third-party products. Their terms, trademarks, and any licensing are owned by Google LLC.
+  If you rely on Google services, you must follow Google's Terms of Service and policies.
+- This project does NOT distribute any proprietary Google audio assets.
+- For production use or if you require server-side TTS (e.g. Google Cloud TTS, Amazon Polly, Azure TTS), obtain and manage API keys
+  securely on a server (do NOT embed API keys in client-side JavaScript). Implement server-side proxies and comply with vendor licensing.
+- The included icons are placeholders. Replace them with your own icons/graphics if you publish publicly.
+
+If you want, I can prepare a server-template for using a paid cloud TTS provider legally (Node.js + example), or help you obtain the proper licenses.
