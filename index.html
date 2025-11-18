@@ -8,18 +8,19 @@
 <link rel="manifest" href="manifest.json">
 
 <style>
-  /* Alle Styles (CSS) hier integriert */
-  :root {
+/* Alle Styles (CSS) hier integriert */
+:root {
     --bg:#0f1720; 
     --card:#111827;
     --accent:#ef4444; /* Rot für Herzen */
+    --install:#10b981; /* Grün für Install-Button */
     --muted:#9ca3af;
     --heart-color: var(--accent);
-  }
+}
 
-  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+* { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
-  body {
+body {
     margin:0; padding:0; 
     min-height:100vh;
     display:flex; align-items:center; justify-content:center;
@@ -28,10 +29,10 @@
     color:#e6eef6;
     position: relative; 
     overflow: hidden;
-  }
-  
-  /* --- HAUPTKARTE --- */
-  .card {
+}
+ 
+/* --- HAUPTKARTE --- */
+.card {
     padding:24px; 
     width:100%;
     max-width:780px;
@@ -44,9 +45,9 @@
     gap:18px;
     position: relative; 
     z-index: 20;
-  }
+}
 
-  .effect-wrap {
+.effect-wrap {
     display:flex;
     flex-direction:column;
     gap:20px;
@@ -54,49 +55,49 @@
     justify-content:center;
     height: 120px; 
     width: 100%;
-  }
-  
-  #centerIndicator {
-      height: 40px;
-      line-height: 40px;
-      color: var(--muted);
-      font-size: 16px;
-      opacity: 0.8;
-  }
+}
+ 
+#centerIndicator {
+    height: 40px;
+    line-height: 40px;
+    color: var(--muted);
+    font-size: 16px;
+    opacity: 0.8;
+}
 
-  /* --- HERZ-CONTAINER --- */
-  #heartsContainer {
-      position: fixed; 
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 10; 
-      opacity: 0; 
-      transition: opacity 0.3s;
-      overflow: hidden;
-  }
+/* --- HERZ-CONTAINER --- */
+#heartsContainer {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 10; 
+    opacity: 0; 
+    transition: opacity 0.3s;
+    overflow: hidden;
+}
 
-  #heartsContainer.active {
-      opacity: 1;
-  }
+#heartsContainer.active {
+    opacity: 1;
+}
 
-  .heart {
-      position: absolute;
-      font-size: 30px; 
-      transform: translateY(-20px); 
-      animation: fall linear forwards;
-      text-shadow: 0 0 5px rgba(239, 68, 68, 0.5); 
-  }
+.heart {
+    position: absolute;
+    font-size: 30px; 
+    transform: translateY(-20px); 
+    animation: fall linear forwards;
+    text-shadow: 0 0 5px rgba(239, 68, 68, 0.5); 
+}
 
-  @keyframes fall {
-      0% { transform: translateY(-20px); opacity: 1; }
-      100% { transform: translateY(100vh); opacity: 0; } 
-  }
+@keyframes fall {
+    0% { transform: translateY(-20px); opacity: 1; }
+    100% { transform: translateY(100vh); opacity: 0; } 
+}
 
-  /* Buttons */
-  button {
+/* Buttons */
+button {
     background:var(--accent);
     padding:12px 16px;
     border:none;
@@ -107,20 +108,33 @@
     touch-action:manipulation;
     opacity:0.6; 
     transition:opacity 0.2s;
-  }
+    white-space: nowrap; /* Wichtig für Install Button */
+}
 
-  button.active {
-      opacity:1; 
-  }
+button.active {
+    opacity:1; 
+}
 
-  button.secondary {
+button.secondary {
     background:transparent;
     border:1px solid rgba(255,255,255,0.1);
     color:var(--muted);
     opacity:1; 
-  }
+    padding:12px 16px;
+}
 
-  .result-box {
+/* NEUER INSTALL-BUTTON STYLING */
+#installPwaBtn {
+    background: var(--install); /* Grüne Farbe für Installation */
+    color: white;
+    font-size: 14px;
+    padding: 12px 16px;
+    opacity: 1;
+    transition: none;
+    margin-left: 10px; /* Kleiner Abstand zu den anderen Buttons */
+}
+
+.result-box {
     margin-top:6px;
     width:100%;
     text-align:center;
@@ -128,119 +142,50 @@
     border-radius:8px;
     background:rgba(255,255,255,0.02);
     min-height:64px;
-  }
-  
-  .selection-buttons button {
+}
+ 
+.selection-buttons button {
     background:#374151; 
     opacity:1;
     border:1px solid transparent;
-  }
-  .selection-buttons button.active {
-      background:var(--accent);
-  }
-
-  /* --- INSTALLATIONS-MODAL STYLES (Der wichtigste Teil für die Installation) --- */
-  #installModal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      /* Wichtig: Standardmäßig versteckt */
-      display: none; 
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      padding: 20px;
-      backdrop-filter: blur(5px);
-  }
-
-  .modal-content {
-      background: var(--card);
-      border-radius: 12px;
-      padding: 30px;
-      max-width: 400px;
-      width: 100%;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-      text-align: center;
-      transform: scale(0.9);
-      animation: popIn 0.3s forwards ease-out;
-  }
-
-  @keyframes popIn {
-      100% { transform: scale(1); }
-  }
-
-  .modal-content h3 {
-      font-size: 1.5rem;
-      margin-top: 0;
-      color: var(--accent);
-  }
-
-  .modal-content p {
-      color: var(--muted);
-      margin-bottom: 25px;
-  }
-
-  .modal-buttons {
-      display: flex;
-      gap: 15px;
-      justify-content: center;
-  }
-
-  #installAppBtn {
-      background: var(--accent);
-      opacity: 1;
-  }
-
-  #closeModalBtn {
-      background: transparent;
-      border: 1px solid var(--muted);
-      color: var(--muted);
-  }
+}
+.selection-buttons button.active {
+    background:var(--accent);
+}
 </style>
 </head>
 
 <body>
-
-    <!-- INSTALLATIONS-MODAL (PWA) -->
-    <div id="installModal">
-        <div class="modal-content">
-            <h3>App installieren</h3>
-            <p>Möchtest du das Liebes-Roulette direkt auf deinem Startbildschirm installieren? Es funktioniert dann wie eine normale App!</p>
-            <div class="modal-buttons">
-                <button id="installAppBtn">App installieren</button>
-                <button id="closeModalBtn" class="secondary">Abbrechen</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- HERZ-CONTAINER für den Fall-Effekt -->
-    <div id="heartsContainer"></div>
-    
+    <!-- HERZ-CONTAINER für den Fall-Effekt -->
+    <div id="heartsContainer"></div>
+    
 <div class="card">
-  
-  <div class="effect-wrap">
-    
-    <div id="centerIndicator">
-        💖 Klicke auf Starten 💖
-    </div>
+  
+  <div class="effect-wrap">
+    
+    <div id="centerIndicator">
+        💖 Klicke auf Starten 💖
+    </div>
 
-    <!-- AUSWAHL-BUTTONS -->
-    <div class="selection-buttons" style="display:flex; gap:8px;">
-        <button id="selectHimBtn" class="active">🔥 Nur für mich (Ihn)</button>
-        <button id="selectHerBtn">💖 Nur für Sie</button>
-        <button id="selectBothBtn">🔗 Für Beide</button>
-    </div>
+    <!-- AUSWAHL-BUTTONS -->
+    <div class="selection-buttons" style="display:flex; gap:8px;">
+        <button id="selectHimBtn" class="active">🔥 Nur für mich (Ihn)</button>
+        <button id="selectHerBtn">💖 Nur für Sie</button>
+        <button id="selectBothBtn">🔗 Für Beide</button>
+    </div>
 
-    <div style="display:flex; gap:10px;">
-      <button id="spinBtn" class="active">Starten</button>
-      <button id="stopBtn" class="secondary" disabled>Stoppen</button>
-    </div>
+    <!-- AKTIONEN-REIHE MIT NEUEM INSTALL-BUTTON -->
+    <div id="actionRow" style="display:flex; gap:10px; align-items:center; flex-wrap: wrap; justify-content: center;">
+      <button id="spinBtn" class="active">Starten</button>
+      <button id="stopBtn" class="secondary" disabled>Stoppen</button>
+      <!-- NEUER PWA INSTALLATIONS-BUTTON - Standardmäßig versteckt -->
+      <button id="installPwaBtn" style="display:none;">
+        ⬇️ App installieren
+      </button>
+    </div>
 
-    <div class="result-box" id="resultBox">Wähle eine Kategorie & klicke auf "Starten".</div>
-  </div>
+    <div class="result-box" id="resultBox">Wähle eine Kategorie & klicke auf "Starten".</div>
+  </div>
 </div>
 
 <script>
@@ -248,73 +193,73 @@
 
 /* --- AUFGABEN-DATEN --- */
 const allTasks = [
-  // 20 Aufgaben für IHN (DICH)
-  { target: "DICH", task: "Lass dich von deiner Freundin fünf Minuten lang mit einem Gürtel sanft auf den Hintern auspeitschen. Wählt die Intensität vorher gemeinsam ab." },
-  { target: "DICH", task: "Du musst ihr zehn Minuten lang die Füße küssen und massieren, und zwar aufmerksam und leidenschaftlich." },
-  { target: "DICH", task: "Nacktputz: Du musst ein von ihr bestimmtes Zimmer für zehn Minuten nackt aufräumen oder putzen. Sie beaufsichtigt." },
-  { target: "DICH", task: "Sie darf dir dreimal hintereinander einen festen Klaps auf den Po geben. Wie stark, bestimmt sie." },
-  { target: "DICH", task: "Du musst ein von ihr gewähltes Kleidungsstück, zum Beispiel einen BH oder Strümpfe, für dreißig Minuten tragen und dabei ihren Befehlen folgen." },
-  { target: "DICH", task: "Sie darf dir einen Zungenkuss geben, so lange sie möchte. Maximal fünf Minuten. Du musst passiv bleiben." },
-  { target: "DICH", task: "Du musst ihr einen Liebesbrief schreiben, in dem du ihr verrätst, was dich am meisten an ihr anturnt." },
-  { target: "DICH", task: "Laufe für fünf Minuten nackt durch die Wohnung oder das Haus, während sie dich bewertet und kritisiert." },
-  { target: "DICH", task: "Sie darf dich zehn Minuten lang an einer nicht erogenen Zone, zum Beispiel dem Arm oder dem Ohr, neckisch kneifen und fest drücken." },
-  { target: "DICH", task: "Du musst ihren Lieblingssong laut singen, während du ihr dabei in die Augen schaust." },
-  { target: "DICH", task: "Du musst drei Dinge aus der Wohnung holen, die sie dir im Dunkeln zuruft. Augen verbinden." },
-  { target: "DICH", task: "Sie darf dir zwanzig Sekunden lang einen festen Biss auf die Schulter geben. Du musst ein Stoppwort bereit haben." },
-  { target: "DICH", task: "Du musst dich zehn Minuten lang in einem von ihr gewählten Outfit präsentieren und ihr dienen." },
-  { target: "DICH", task: "Schreibe fünf Dinge auf, die du gerne in ihrem Bett tust und die sie dir bisher nicht erlaubt hat." },
-  { target: "DICH", task: "Lass sie deine Haare oder deinen Bart stylen, wie sie möchte. Du musst es für den Rest des Abends so lassen." },
-  { target: "DICH", task: "Du musst ihr ein von ihr gewünschtes Getränk zubereiten und es ihr auf Knien servieren." },
-  { target: "DICH", task: "Für die nächsten dreißig Minuten darfst du nur mit einem Lächeln antworten, egal was sie fragt." },
-  { target: "DICH", task: "Sie darf dich sanft fesseln und fünfzehn Minuten lang bestimmen, was du tust. Maximal fünfzehn Minuten." },
-  { target: "DICH", task: "Du musst ihr fünf Komplimente machen, die sich nur auf ihren Charakter, nicht ihr Aussehen, beziehen." },
-  { target: "DICH", task: "Du musst ihr fünf Minuten lang in die Augen schauen, ohne zu lachen oder wegzusehen." },
+  // 20 Aufgaben für IHN (DICH)
+  { target: "DICH", task: "Lass dich von deiner Freundin fünf Minuten lang mit einem Gürtel sanft auf den Hintern auspeitschen. Wählt die Intensität vorher gemeinsam ab." },
+  { target: "DICH", task: "Du musst ihr zehn Minuten lang die Füße küssen und massieren, und zwar aufmerksam und leidenschaftlich." },
+  { target: "DICH", task: "Nacktputz: Du musst ein von ihr bestimmtes Zimmer für zehn Minuten nackt aufräumen oder putzen. Sie beaufsichtigt." },
+  { target: "DICH", task: "Sie darf dir dreimal hintereinander einen festen Klaps auf den Po geben. Wie stark, bestimmt sie." },
+  { target: "DICH", task: "Du musst ein von ihr gewähltes Kleidungsstück, zum Beispiel einen BH oder Strümpfe, für dreißig Minuten tragen und dabei ihren Befehlen folgen." },
+  { target: "DICH", task: "Sie darf dir einen Zungenkuss geben, so lange sie möchte. Maximal fünf Minuten. Du musst passiv bleiben." },
+  { target: "DICH", task: "Du musst ihr einen Liebesbrief schreiben, in dem du ihr verrätst, was dich am meisten an ihr anturnt." },
+  { target: "DICH", task: "Laufe für fünf Minuten nackt durch die Wohnung oder das Haus, während sie dich bewertet und kritisiert." },
+  { target: "DICH", task: "Sie darf dich zehn Minuten lang an einer nicht erogenen Zone, zum Beispiel dem Arm oder dem Ohr, neckisch kneifen und fest drücken." },
+  { target: "DICH", task: "Du musst ihren Lieblingssong laut singen, während du ihr dabei in die Augen schaust." },
+  { target: "DICH", task: "Du musst drei Dinge aus der Wohnung holen, die sie dir im Dunkeln zuruft. Augen verbinden." },
+  { target: "DICH", task: "Sie darf dir zwanzig Sekunden lang einen festen Biss auf die Schulter geben. Du musst ein Stoppwort bereit haben." },
+  { target: "DICH", task: "Du musst dich zehn Minuten lang in einem von ihr gewählten Outfit präsentieren und ihr dienen." },
+  { target: "DICH", task: "Schreibe fünf Dinge auf, die du gerne in ihrem Bett tust und die sie dir bisher nicht erlaubt hat." },
+  { target: "DICH", task: "Lass sie deine Haare oder deinen Bart stylen, wie sie möchte. Du musst es für den Rest des Abends so lassen." },
+  { target: "DICH", task: "Du musst ihr ein von ihr gewünschtes Getränk zubereiten und es ihr auf Knien servieren." },
+  { target: "DICH", task: "Für die nächsten dreißig Minuten darfst du nur mit einem Lächeln antworten, egal was sie fragt." },
+  { target: "DICH", task: "Sie darf dich sanft fesseln und fünfzehn Minuten lang bestimmen, was du tust. Maximal fünfzehn Minuten." },
+  { target: "DICH", task: "Du musst ihr fünf Komplimente machen, die sich nur auf ihren Charakter, nicht ihr Aussehen, beziehen." },
+  { target: "DICH", task: "Du musst ihr fünf Minuten lang in die Augen schauen, ohne zu lachen oder wegzusehen." },
 
 
-  // 20 Aufgaben für SIE (DEINE PARTNERIN)
-  { target: "SIE", task: "Sie muss dir fünfzehn Minuten lang eine erotische Massage geben, ohne dass du etwas anderes verlangst. Nur der Empfänger zählt." },
-  { target: "SIE", task: "Sie muss dir einen Knutschfleck an einer von dir bestimmten Stelle, Hals oder Bauch, verpassen. Der Fleck muss mindestens eine Stunde sichtbar sein." },
-  { target: "SIE", task: "Sie muss fünf erotische Nachrichten (einvernehmliche) an dich senden, mit je einem Abstand von fünfzehn Minuten." },
-  { target: "SIE", task: "Sie darf fünf Minuten lang deine Nacken- und Schulterpartie fest beißen und kneifen. Sie muss dabei auf dein Stoppwort achten." },
-  { target: "SIE", task: "Sie muss ein von dir gewähltes Gericht mit verbundenen Augen kochen oder zubereiten. Hilfe ist erlaubt." },
-  { target: "SIE", task: "Sie muss sich komplett ausziehen und fünf Minuten lang mit einem Gegenstand, zum Beispiel einem Besen oder der Fernbedienung, sinnlich tanzen." },
-  { target: "SIE", task: "Sie muss dir erzählen, welche ihrer Grenzen sie für dich am ehesten überschreiten würde, in einem sicheren Kontext." },
-  { target: "SIE", task: "Sie muss dich fünf Minuten lang an der Wange kneifen, während du versuchst, normal weiter zu reden." },
-  { target: "SIE", task: "Sie muss einen Schnaps oder einen Shot trinken und dir danach ihre Handlungen für die nächsten zehn Minuten überlassen." },
-  { target: "SIE", task: "Sie muss dir für fünfzehn Minuten auf dem Schoß sitzen und dich ohne Hände füttern." },
-  { target: "SIE", task: "Sie muss dir blind vertrauen. Sie lässt sich von dir an einen geheimen Ort führen, zum Beispiel die Badewanne, ohne Fragen zu stellen." },
-  { target: "SIE", task: "Sie muss fünf erogene Zonen an deinem Körper benennen, die sie bisher vernachlässigt hat." },
-  { target: "SIE", task: "Sie muss ein Outfit aus ihrer Jugend anziehen und dir dazu eine peinliche Geschichte erzählen." },
-  { target: "SIE", task: "Sie darf dir zweimal fest in den Arm beißen. Sie muss dich vorher fragen, wo." },
-  { target: "SIE", task: "Sie muss zehn Minuten lang ihre Hände hinter dem Rücken halten und dich nur mit dem Mund oder den Füßen verwöhnen." },
-  { target: "SIE", task: "Sie muss dir ein Geständnis über eine heimliche Eifersucht oder einen heimlichen Wunsch machen." },
-  { target: "SIE", task: "Sie muss drei Minuten lang den Wandsitz, die Hocke an der Wand, halten, während du sie neckst." },
-  { target: "SIE", task: "Sie muss dir einen Eiswürfel-Blowjob geben, mit einem Eiswürfel im Mund." },
-  { target: "SIE", task: "Sie muss dich fünf Minuten lang mit einem nassen Handtuch leicht schlagen. Immer nur ein Schlag pro Minute." },
-  { target: "SIE", task: "Sie muss dich auf Befehl Herr nennen, wenn du danach fragst, für dreißig Minuten." },
+  // 20 Aufgaben für SIE (DEINE PARTNERIN)
+  { target: "SIE", task: "Sie muss dir fünfzehn Minuten lang eine erotische Massage geben, ohne dass du etwas anderes verlangst. Nur der Empfänger zählt." },
+  { target: "SIE", task: "Sie muss dir einen Knutschfleck an einer von dir bestimmten Stelle, Hals oder Bauch, verpassen. Der Fleck muss mindestens eine Stunde sichtbar sein." },
+  { target: "SIE", task: "Sie muss fünf erotische Nachrichten (einvernehmliche) an dich senden, mit je einem Abstand von fünfzehn Minuten." },
+  { target: "SIE", task: "Sie darf fünf Minuten lang deine Nacken- und Schulterpartie fest beißen und kneifen. Sie muss dabei auf dein Stoppwort achten." },
+  { target: "SIE", task: "Sie muss ein von dir gewähltes Gericht mit verbundenen Augen kochen oder zubereiten. Hilfe ist erlaubt." },
+  { target: "SIE", task: "Sie muss sich komplett ausziehen und fünf Minuten lang mit einem Gegenstand, zum Beispiel einem Besen oder der Fernbedienung, sinnlich tanzen." },
+  { target: "SIE", task: "Sie muss dir erzählen, welche ihrer Grenzen sie für dich am ehesten überschreiten würde, in einem sicheren Kontext." },
+  { target: "SIE", task: "Sie muss dich fünf Minuten lang an der Wange kneifen, während du versuchst, normal weiter zu reden." },
+  { target: "SIE", task: "Sie muss einen Schnaps oder einen Shot trinken und dir danach ihre Handlungen für die nächsten zehn Minuten überlassen." },
+  { target: "SIE", task: "Sie muss dir für fünfzehn Minuten auf dem Schoß sitzen und dich ohne Hände füttern." },
+  { target: "SIE", task: "Sie muss dir blind vertrauen. Sie lässt sich von dir an einen geheimen Ort führen, zum Beispiel die Badewanne, ohne Fragen zu stellen." },
+  { target: "SIE", task: "Sie muss fünf erogene Zonen an deinem Körper benennen, die sie bisher vernachlässigt hat." },
+  { target: "SIE", task: "Sie muss ein Outfit aus ihrer Jugend anziehen und dir dazu eine peinliche Geschichte erzählen." },
+  { target: "SIE", task: "Sie darf dir zweimal fest in den Arm beißen. Sie muss dich vorher fragen, wo." },
+  { target: "SIE", task: "Sie muss zehn Minuten lang ihre Hände hinter dem Rücken halten und dich nur mit dem Mund oder den Füßen verwöhnen." },
+  { target: "SIE", task: "Sie muss dir ein Geständnis über eine heimliche Eifersucht oder einen heimlichen Wunsch machen." },
+  { target: "SIE", task: "Sie muss drei Minuten lang den Wandsitz, die Hocke an der Wand, halten, während du sie neckst." },
+  { target: "SIE", task: "Sie muss dir einen Eiswürfel-Blowjob geben, mit einem Eiswürfel im Mund." },
+  { target: "SIE", task: "Sie muss dich fünf Minuten lang mit einem nassen Handtuch leicht schlagen. Immer nur ein Schlag pro Minute." },
+  { target: "SIE", task: "Sie muss dich auf Befehl Herr nennen, wenn du danach fragst, für dreißig Minuten." },
 
 
-  // 20 Aufgaben für BEIDE (EUCH)
-  { target: "BEIDE", task: "Ihr spielt fünf Minuten lang Herr und Sklavin. Sie ist die Herrin und du musst alle ihre, einvernehmlichen, Befehle ausführen." },
-  { target: "BEIDE", task: "Erzählt euch gegenseitig, was eure größte Sexphantasie mit dem anderen ist. Ihr wählt gemeinsam die spannendste aus." },
-  { target: "BEIDE", task: "Kneifen/Beißen/Schlagen-Roulette: Sie darf dich dreimal fest kneifen. Du darfst danach einmal sie an einer Stelle beißen, die sie wählt, aber nur leicht! Die Intensität müsst ihr vorher abstimmen." },
-  { target: "BEIDE", task: "Ihr müsst zwanzig Minuten lang komplett nackt sein, egal was ihr tut, wie Fernsehen oder Haushalt." },
-  { target: "BEIDE", task: "Nimm einen Eiswürfel in den Mund und gib ihn ihr in den Mund – ohne die Hände zu benutzen." },
-  { target: "BEIDE", task: "Ihr müsst euch gegenseitig die Kleidung vom Leib reißen, ohne Verletzung, und danach sofort zehn Minuten lang mit Küssen verbringen." },
-  { target: "BEIDE", task: "Fesselt euch gegenseitig an den Handgelenken und versucht, euch so gegenseitig ein Getränk einzuschenken und zu trinken." },
-  { target: "BEIDE", task: "Einer wählt drei Stellen am Körper des anderen, die er küssen muss. Der Geküsste muss dabei still bleiben." },
-  { target: "BEIDE", task: "Ihr müsst fünfzehn Minuten lang in kompletter Dunkelheit miteinander reden, ohne euch dabei zu berühren." },
-  { target: "BEIDE", task: "Beide müssen fünf Minuten lang in der Küche knien und der andere darf sie mit Essbarem, zum Beispiel Schlagsahne, füttern." },
-  { target: "BEIDE", task: "Ihr müsst beide ein T-Shirt des anderen anziehen, aber falsch herum, mit dem Halsausschnitt am Po." },
-  { target: "BEIDE", task: "Ihr müsst einen Tanz erfinden, der nur aus fünf Schritten besteht, und diesen dreimal aufführen." },
-  { target: "BEIDE", task: "Schlagt abwechselnd mit einem Kissen auf den Hintern des anderen. Insgesamt zehn Schläge pro Person." },
-  { target: "BEIDE", task: "Ihr müsst zehn Minuten lang mit verbundenen Augen die Handlungen des anderen erraten." },
-  { target: "BEIDE", task: "Der eine kniet, der andere sitzt auf seinem Rücken. So müssen sie gemeinsam fünf Minuten lang Fernsehen schauen." },
-  { target: "BEIDE", task: "Ihr müsst fünf Minuten lang in der Öffentlichkeit, zum Beispiel auf dem Balkon oder am Fenster, in Unterwäsche stehen und euch küssen." },
-  { target: "BEIDE", task: "Jeder schreibt drei Verbote auf einen Zettel. Der andere muss diese Verbote für die nächsten zwei Stunden befolgen." },
-  { target: "BEIDE", task: "Ihr müsst euch gegenseitig mit einer Feder kitzeln, bis einer von euch lacht oder kapituliert." },
-  { target: "BEIDE", task: "Beide müssen einen Shot trinken. Danach muss jeder dem anderen fünf Minuten lang die Kleidung anziehen." },
-  { target: "BEIDE", task: "Ihr müsst euch gegenseitig Haustiere sein. Fünfzehn Minuten lang muss einer Futter geben und der andere Miau oder Wuff machen." }
+  // 20 Aufgaben für BEIDE (EUCH)
+  { target: "BEIDE", task: "Ihr spielt fünf Minuten lang Herr und Sklavin. Sie ist die Herrin und du musst alle ihre, einvernehmlichen, Befehle ausführen." },
+  { target: "BEIDE", task: "Erzählt euch gegenseitig, was eure größte Sexphantasie mit dem anderen ist. Ihr wählt gemeinsam die spannendste aus." },
+  { target: "BEIDE", task: "Kneifen/Beißen/Schlagen-Roulette: Sie darf dich dreimal fest kneifen. Du darfst danach einmal sie an einer Stelle beißen, die sie wählt, aber nur leicht! Die Intensität müsst ihr vorher abstimmen." },
+  { target: "BEIDE", task: "Ihr müsst zwanzig Minuten lang komplett nackt sein, egal was ihr tut, wie Fernsehen oder Haushalt." },
+  { target: "BEIDE", task: "Nimm einen Eiswürfel in den Mund und gib ihn ihr in den Mund – ohne die Hände zu benutzen." },
+  { target: "BEIDE", task: "Ihr müsst euch gegenseitig die Kleidung vom Leib reißen, ohne Verletzung, und danach sofort zehn Minuten lang mit Küssen verbringen." },
+  { target: "BEIDE", task: "Fesselt euch gegenseitig an den Handgelenken und versucht, euch so gegenseitig ein Getränk einzuschenken und zu trinken." },
+  { target: "BEIDE", task: "Einer wählt drei Stellen am Körper des anderen, die er küssen muss. Der Geküsste muss dabei still bleiben." },
+  { target: "BEIDE", task: "Ihr müsst fünfzehn Minuten lang in kompletter Dunkelheit miteinander reden, ohne euch dabei zu berühren." },
+  { target: "BEIDE", task: "Beide müssen fünf Minuten lang in der Küche knien und der andere darf sie mit Essbarem, zum Beispiel Schlagsahne, füttern." },
+  { target: "BEIDE", task: "Ihr müsst beide ein T-Shirt des anderen anziehen, aber falsch herum, mit dem Halsausschnitt am Po." },
+  { target: "BEIDE", task: "Ihr müsst einen Tanz erfinden, der nur aus fünf Schritten besteht, und diesen dreimal aufführen." },
+  { target: "BEIDE", task: "Schlagt abwechselnd mit einem Kissen auf den Hintern des anderen. Insgesamt zehn Schläge pro Person." },
+  { target: "BEIDE", task: "Ihr müsst zehn Minuten lang mit verbundenen Augen die Handlungen des anderen erraten." },
+  { target: "BEIDE", task: "Der eine kniet, der andere sitzt auf seinem Rücken. So müssen sie gemeinsam fünf Minuten lang Fernsehen schauen." },
+  { target: "BEIDE", task: "Ihr müsst fünf Minuten lang in der Öffentlichkeit, zum Beispiel auf dem Balkon oder am Fenster, in Unterwäsche stehen und euch küssen." },
+  { target: "BEIDE", task: "Jeder schreibt drei Verbote auf einen Zettel. Der andere muss diese Verbote für die nächsten zwei Stunden befolgen." },
+  { target: "BEIDE", task: "Ihr müsst euch gegenseitig mit einer Feder kitzeln, bis einer von euch lacht oder kapituliert." },
+  { target: "BEIDE", task: "Beide müssen einen Shot trinken. Danach muss jeder dem anderen fünf Minuten lang die Kleidung anziehen." },
+  { target: "BEIDE", task: "Ihr müsst euch gegenseitig Haustiere sein. Fünfzehn Minuten lang muss einer Futter geben und der andere Miau oder Wuff machen." }
 ];
 
 const heartsContainer = document.getElementById("heartsContainer");
@@ -327,11 +272,11 @@ const selectHimBtn = document.getElementById("selectHimBtn");
 const selectHerBtn = document.getElementById("selectHerBtn");
 const selectBothBtn = document.getElementById("selectBothBtn");
 
+// Neuer PWA Installations-Button
+const installPwaBtn = document.getElementById('installPwaBtn');
+
 // Variablen für den Installations-Prompt (PWA)
 let deferredPrompt = null;
-const installModal = document.getElementById('installModal');
-const installAppBtn = document.getElementById('installAppBtn');
-const closeModalBtn = document.getElementById('closeModalBtn');
 
 
 let selectedTarget = "DICH";
@@ -431,24 +376,46 @@ function readTaskAloud(text) {
 // --- STEUERUNGS FUNKTIONEN ---
 
 function startEffect() {
-  if (starting) return;
-  window.speechSynthesis.cancel(); 
+    if (starting) return;
+    window.speechSynthesis.cancel(); 
 
-  starting = true;
-  spinBtn.disabled = true;
-  stopBtn.disabled = false;
-  
-  selectHimBtn.disabled = true;
-  selectHerBtn.disabled = true;
-  selectBothBtn.disabled = true;
-  
-  resultBox.innerHTML = 'Die Herzen fallen... Eine Aufgabe wird ermittelt...';
-  
-  startHeartFall();
+    starting = true;
+    spinBtn.disabled = true;
+    stopBtn.disabled = false;
+    
+    selectHimBtn.disabled = true;
+    selectHerBtn.disabled = true;
+    selectBothBtn.disabled = true;
+    // PWA Button muss auch deaktiviert werden, falls sichtbar
+    installPwaBtn.disabled = true;
 
-  const duration = 3000; 
-  
-  timeoutHandle = setTimeout(() => {
+    resultBox.innerHTML = 'Die Herzen fallen... Eine Aufgabe wird ermittelt...';
+    
+    startHeartFall();
+
+    const duration = 3000; 
+    
+    timeoutHandle = setTimeout(() => {
+        stopHeartFall();
+        
+        starting = false;
+        spinBtn.disabled = false;
+        stopBtn.disabled = true;
+        
+        selectHimBtn.disabled = false;
+        selectHerBtn.disabled = false;
+        selectBothBtn.disabled = false;
+        // PWA Button wieder aktivieren
+        installPwaBtn.disabled = false;
+        
+        displayResult(selectedTarget);
+    }, duration); 
+}
+
+function stopNow() {
+    if (!starting) return;
+    
+    clearTimeout(timeoutHandle);
     stopHeartFall();
     
     starting = false;
@@ -458,67 +425,50 @@ function startEffect() {
     selectHimBtn.disabled = false;
     selectHerBtn.disabled = false;
     selectBothBtn.disabled = false;
+    installPwaBtn.disabled = false; // PWA Button wieder aktivieren
     
     displayResult(selectedTarget);
-  }, duration); 
-}
-
-function stopNow() {
-  if (!starting) return;
-  
-  clearTimeout(timeoutHandle);
-  stopHeartFall();
-  
-  starting = false;
-  spinBtn.disabled = false;
-  stopBtn.disabled = true;
-  
-  selectHimBtn.disabled = false;
-  selectHerBtn.disabled = false;
-  selectBothBtn.disabled = false;
-  
-  displayResult(selectedTarget);
 }
 
 function displayResult(target) {
-  const filteredTasks = allTasks.filter(task => task.target === target);
-  
-  if (filteredTasks.length === 0) {
-      resultBox.innerHTML = 'FEHLER: Keine Aufgaben in dieser Kategorie gefunden.';
-      return;
-  }
-  
-  const randomIndex = Math.floor(Math.random() * filteredTasks.length);
-  const result = filteredTasks[randomIndex];
-  
-  let header = '';
-  let targetPhrase = ''; 
-  
-  switch(result.target) {
-      case "DICH":
-          header = '🔥 AUFGABE FÜR DICH (IHN) 🔥';
-          targetPhrase = 'Aufgabe für den Mann.';
-          break;
-      case "SIE":
-          header = '💖 AUFGABE FÜR SIE 💖';
-          targetPhrase = 'Aufgabe für die Frau.';
-          break;
-      case "BEIDE":
-          header = '🔗 AUFGABE FÜR EUCH BEIDE 🔗';
-          targetPhrase = 'Aufgabe für euch beide.';
-          break;
-  }
+    const filteredTasks = allTasks.filter(task => task.target === target);
+    
+    if (filteredTasks.length === 0) {
+        resultBox.innerHTML = 'FEHLER: Keine Aufgaben in dieser Kategorie gefunden.';
+        return;
+    }
+    
+    const randomIndex = Math.floor(Math.random() * filteredTasks.length);
+    const result = filteredTasks[randomIndex];
+    
+    let header = '';
+    let targetPhrase = ''; 
+    
+    switch(result.target) {
+        case "DICH":
+            header = '🔥 AUFGABE FÜR DICH (IHN) 🔥';
+            targetPhrase = 'Aufgabe für den Mann.';
+            break;
+        case "SIE":
+            header = '💖 AUFGABE FÜR SIE 💖';
+            targetPhrase = 'Aufgabe für die Frau.';
+            break;
+        case "BEIDE":
+            header = '🔗 AUFGABE FÜR EUCH BEIDE 🔗';
+            targetPhrase = 'Aufgabe für euch beide.';
+            break;
+    }
 
-  resultBox.innerHTML = `**${header}**<br>${result.task}`;
+    resultBox.innerHTML = `**${header}**<br>${result.task}`;
 
-  const fullTaskText = `${targetPhrase} ${result.task}`; 
-  readTaskAloud(fullTaskText);
+    const fullTaskText = `${targetPhrase} ${result.task}`; 
+    readTaskAloud(fullTaskText);
 }
 
-/* --- PWA INSTALLATIONS-LOGIK (Der Code, der die Installation ermöglicht!) --- */
+/* --- PWA INSTALLATIONS-LOGIK (Verwendet den diskreten Button) --- */
 
 window.addEventListener('beforeinstallprompt', (e) => {
-    // Wenn die App bereits im Standalone-Modus läuft (installiert ist), nicht fragen
+    // Wenn die App bereits installiert ist, brauchen wir keinen Button
     if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
         return; 
     }
@@ -527,45 +477,39 @@ window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
     
-    // Zeigt den benutzerdefinierten Installations-Modal an
-    if (installModal) {
-        installModal.style.display = 'flex';
+    // Zeige den diskreten Installations-Button an, wenn das Event feuert
+    if (installPwaBtn) {
+        installPwaBtn.style.display = 'block'; 
     }
 });
 
-// Klick auf den Installations-Button im Modal
-if (installAppBtn) {
-    installAppBtn.addEventListener('click', () => {
+// Klick auf den Installations-Button
+if (installPwaBtn) {
+    installPwaBtn.addEventListener('click', () => {
         if (deferredPrompt) {
-            // 1. Versteckt den benutzerdefinierten Modal
-            if (installModal) {
-                installModal.style.display = 'none';
-            }
-            // 2. Zeigt die native Installations-Eingabeaufforderung des Browsers an
+            // 1. Verstecke den Installations-Button sofort, da der native Prompt kommt
+            installPwaBtn.style.display = 'none';
+            
+            // 2. Zeige die native Installations-Eingabeaufforderung des Browsers an
             deferredPrompt.prompt();
             
-            // 3. Überwacht die Benutzerentscheidung
+            // 3. Überwache die Benutzerentscheidung
             deferredPrompt.userChoice.then((choiceResult) => {
                 // Setze deferredPrompt zurück, nachdem es einmal verwendet wurde
                 deferredPrompt = null;
+                // Wenn der Benutzer es ablehnt (dismissed), zeige den Button wieder an
+                if (choiceResult.outcome === 'dismissed') {
+                    installPwaBtn.style.display = 'block';
+                }
             });
         }
     });
 }
 
-// Klick auf den Abbrechen-Button im Modal
-if (closeModalBtn) {
-    closeModalBtn.addEventListener('click', () => {
-        if (installModal) {
-            installModal.style.display = 'none';
-        }
-    });
-}
-
-// Wenn die App erfolgreich installiert wird, Modal ausblenden
+// Wenn die App erfolgreich installiert wird, Button ausblenden
 window.addEventListener('appinstalled', () => {
-    if (installModal) {
-        installModal.style.display = 'none';
+    if (installPwaBtn) {
+        installPwaBtn.style.display = 'none';
     }
 });
 
@@ -578,9 +522,10 @@ selectBothBtn.addEventListener("click", () => updateSelection("BEIDE"));
 spinBtn.addEventListener("click", startEffect);
 stopBtn.addEventListener("click", stopNow);
 
-// Initialisierung beim Laden der Seite
+// Startet die Auswahl beim Laden der Seite
 window.onload = () => {
     updateSelection("DICH");
+    // Initialisiere die Sprachausgabe
     if ('speechSynthesis' in window && window.speechSynthesis.getVoices().length === 0) {
         window.speechSynthesis.onvoiceschanged = () => {
             console.log("Sprachstimmen geladen.");
@@ -591,3 +536,4 @@ window.onload = () => {
 
 </body>
 </html>
+
