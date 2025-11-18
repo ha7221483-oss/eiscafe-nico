@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Bestrafungs-Roulette – Handy-optimiert (PWA)</title>
-<!-- 1. PWA Manifest Link: Muss im selben Ordner liegen -->
+<!-- PWA-Manifest-Datei: Muss im selben Ordner liegen, damit der Browser die Installation anbieten kann -->
 <link rel="manifest" href="manifest.json">
 
 <style>
@@ -139,7 +139,7 @@
       background:var(--accent);
   }
 
-  /* --- INSTALLATIONS-MODAL STYLES --- */
+  /* --- INSTALLATIONS-MODAL STYLES (Der wichtigste Teil für die Installation) --- */
   #installModal {
       position: fixed;
       top: 0;
@@ -147,11 +147,13 @@
       width: 100%;
       height: 100%;
       background: rgba(0, 0, 0, 0.8);
+      /* Wichtig: Standardmäßig versteckt */
       display: none; 
       align-items: center;
       justify-content: center;
       z-index: 1000;
       padding: 20px;
+      backdrop-filter: blur(5px);
   }
 
   .modal-content {
@@ -162,6 +164,12 @@
       width: 100%;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
       text-align: center;
+      transform: scale(0.9);
+      animation: popIn 0.3s forwards ease-out;
+  }
+
+  @keyframes popIn {
+      100% { transform: scale(1); }
   }
 
   .modal-content h3 {
@@ -236,7 +244,8 @@
 </div>
 
 <script>
-// Der komplette JavaScript Code
+// JavaScript Code für Logik und PWA-Installation
+
 /* --- AUFGABEN-DATEN --- */
 const allTasks = [
   // 20 Aufgaben für IHN (DICH)
@@ -350,7 +359,7 @@ function updateSelection(target) {
     selectedTarget = target;
 }
 
-// --- HERZ FUNKTIONEN ---
+// --- HERZ FUNKTIONEN (Visueller Effekt) ---
 
 function createHeart() {
     const heart = document.createElement('div');
@@ -395,7 +404,7 @@ function stopHeartFall() {
     }, 500); 
 }
 
-// --- SPRACHSYNTHESE FUNKTION (Liess die Aufgabe vor) ---
+// --- SPRACHSYNTHESE FUNKTION ---
 function readTaskAloud(text) {
     window.speechSynthesis.cancel(); 
     
@@ -419,7 +428,7 @@ function readTaskAloud(text) {
 }
 
 
-// --- STEUERUNGS FUNKTIONEN (Start/Stop des Roulettes) ---
+// --- STEUERUNGS FUNKTIONEN ---
 
 function startEffect() {
   if (starting) return;
@@ -437,7 +446,7 @@ function startEffect() {
   
   startHeartFall();
 
-  const duration = 3000; // Dauer des Effekts in Millisekunden
+  const duration = 3000; 
   
   timeoutHandle = setTimeout(() => {
     stopHeartFall();
@@ -506,14 +515,15 @@ function displayResult(target) {
   readTaskAloud(fullTaskText);
 }
 
-// --- PWA INSTALLATIONS-LOGIK (Eigene Modaleinblendung) ---
+/* --- PWA INSTALLATIONS-LOGIK (Der Code, der die Installation ermöglicht!) --- */
 
 window.addEventListener('beforeinstallprompt', (e) => {
-    // Zeige das Modal nicht, wenn die App bereits installiert ist (Standalone-Modus)
+    // Wenn die App bereits im Standalone-Modus läuft (installiert ist), nicht fragen
     if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
         return; 
     }
     
+    // Verhindere, dass der Browser den Standard-Prompt sofort anzeigt
     e.preventDefault();
     deferredPrompt = e;
     
@@ -527,15 +537,16 @@ window.addEventListener('beforeinstallprompt', (e) => {
 if (installAppBtn) {
     installAppBtn.addEventListener('click', () => {
         if (deferredPrompt) {
-            // Versteckt den benutzerdefinierten Modal
+            // 1. Versteckt den benutzerdefinierten Modal
             if (installModal) {
                 installModal.style.display = 'none';
             }
-            // Zeigt die native Installations-Eingabeaufforderung an
+            // 2. Zeigt die native Installations-Eingabeaufforderung des Browsers an
             deferredPrompt.prompt();
             
-            // Verhindert, dass der Modal erneut angezeigt wird, nachdem er einmal verwendet wurde
+            // 3. Überwacht die Benutzerentscheidung
             deferredPrompt.userChoice.then((choiceResult) => {
+                // Setze deferredPrompt zurück, nachdem es einmal verwendet wurde
                 deferredPrompt = null;
             });
         }
@@ -551,7 +562,7 @@ if (closeModalBtn) {
     });
 }
 
-// Wenn die App installiert wird, Modal ausblenden
+// Wenn die App erfolgreich installiert wird, Modal ausblenden
 window.addEventListener('appinstalled', () => {
     if (installModal) {
         installModal.style.display = 'none';
@@ -567,10 +578,9 @@ selectBothBtn.addEventListener("click", () => updateSelection("BEIDE"));
 spinBtn.addEventListener("click", startEffect);
 stopBtn.addEventListener("click", stopNow);
 
-// Startet die Auswahl beim Laden der Seite
+// Initialisierung beim Laden der Seite
 window.onload = () => {
     updateSelection("DICH");
-    // Initialisiere die Sprachausgabe
     if ('speechSynthesis' in window && window.speechSynthesis.getVoices().length === 0) {
         window.speechSynthesis.onvoiceschanged = () => {
             console.log("Sprachstimmen geladen.");
