@@ -19,11 +19,3 @@
     }
   ]
 }
-```eof
-
-**Zusammenfassung der Funktion:**
-
-* Deine Datei (`Textdokument (neu) (2).html` / `index.html`) enthält bereits den Code, der den Browser fragt, ob er die App installieren soll.
-* Diese Datei (`manifest.json`) liefert dem Browser die notwendigen Informationen (Name, Icon, Startseite), um die Installation abzuschließen.
-
-Sobald du beide Dateien **`index.html`** (deine App) und **`manifest.json`** (die Konfiguration) zusammen auf deinen Webserver (z. B. GitHub Pages) hochgeladen hast, wird das Pop-up beim ersten Besuch auf deinem Handy automatisch angezeigt.
