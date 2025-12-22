@@ -1,0 +1,98 @@
+* {
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+    margin: 0;
+    background: #0b0b0b;
+    color: #f2f2f2;
+}
+
+.app-container {
+    max-width: 430px;
+    min-height: 100vh;
+    margin: auto;
+    padding: 20px 16px 32px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 26px;
+    margin: 12px 0 20px;
+}
+
+.install-btn {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    font-size: 11px;
+    padding: 6px 10px;
+    border-radius: 14px;
+    border: none;
+    background: #1e1e1e;
+    color: #fff;
+}
+
+.input-area {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+input {
+    flex: 1;
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 14px;
+    border: none;
+    background: #1a1a1a;
+    color: #fff;
+}
+
+input::placeholder {
+    color: #888;
+}
+
+button {
+    padding: 0 18px;
+    border-radius: 14px;
+    border: none;
+    font-size: 22px;
+    background: #ffffff;
+    color: #000;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    margin-top: 10px;
+    background: #141414;
+    border-radius: 16px;
+}
+
+.checkbox {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    border: 2px solid #aaa;
+    flex-shrink: 0;
+}
+
+.checkbox.checked {
+    background: #fff;
+    border-color: #fff;
+}
+
+.done span {
+    text-decoration: line-through;
+    opacity: 0.4;
+}
