@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Shopping List</title>
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#000000">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app-container">
+    <button id="installBtn" class="install-btn" style="display:none">
+        Install App
+    </button>
+
+    <h1>🛒 Shopping List</h1>
+
+    <div class="input-area">
+        <input id="itemInput" type="text" placeholder="Add item..." enterkeyhint="done">
+        <button id="addBtn">+</button>
+    </div>
+
+    <ul id="list"></ul>
+</div>
+
+<script src="app.js"></script>
+
+<script>
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js");
+}
+
+let deferredPrompt;
+const installBtn = document.getElementById("installBtn");
+
+window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.style.display = "block";
+});
+
+installBtn.addEventListener("click", async () => {
+    if (!deferredPrompt) return;
+
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+
+    if (outcome === "accepted") {
+        installBtn.style.display = "none";
+    }
+    deferredPrompt = null;
+});
+</script>
+
+</body>
+</html>
