@@ -36,11 +36,54 @@ const installBtn = document.getElementById("installBtn");
 
 // Register Service Worker
 if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Shopping List</title>
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#000000">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app-container">
+    <button id="installBtn" class="install-btn">
+        Install App
+    </button>
+
+    <h1>🛒 Shopping List</h1>
+
+    <div class="input-area">
+        <input id="itemInput" type="text" placeholder="Add item..." enterkeyhint="done">
+        <button id="addBtn">+</button>
+    </div>
+
+    <ul id="list"></ul>
+</div>
+
+<script src="app.js"></script>
+
+<script>
+const installBtn = document.getElementById("installBtn");
+let deferredPrompt = null;
+
+// ✅ SERVICE WORKER – ABSOLUT SICHER
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker
+            .register("./service-worker.js")
+            .then(() => console.log("Service Worker registered"))
+            .catch(err => console.error("SW failed", err));
+    });
 }
 
 // Hide button if already installed
-if (window.matchMedia('(display-mode: standalone)').matches) {
+if (window.matchMedia("(display-mode: standalone)").matches) {
     installBtn.style.display = "none";
 }
 
@@ -48,28 +91,32 @@ if (window.matchMedia('(display-mode: standalone)').matches) {
 window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
     deferredPrompt = e;
+    installBtn.style.display = "block";
 });
 
-// Manual install button
+// Manual install
 installBtn.addEventListener("click", async () => {
     if (!deferredPrompt) {
-        alert("Use Chrome menu → 'Install app'");
+        alert("Chrome menu → Install app");
         return;
     }
-
     deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-
-    if (outcome === "accepted") {
+    const choice = await deferredPrompt.userChoice;
+    if (choice.outcome === "accepted") {
         installBtn.style.display = "none";
     }
     deferredPrompt = null;
 });
 
-// Hide button after successful install
+// Hide after install
 window.addEventListener("appinstalled", () => {
     installBtn.style.display = "none";
 });
+</script>
+
+</body>
+</html>
+
 </script>
 
 </body>
