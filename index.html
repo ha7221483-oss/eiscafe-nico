@@ -14,7 +14,7 @@
 <body>
 
 <div class="app-container">
-    <button id="installBtn" class="install-btn" style="display:none">
+    <button id="installBtn" class="install-btn">
         Install App
     </button>
 
@@ -31,21 +31,31 @@
 <script src="app.js"></script>
 
 <script>
+let deferredPrompt;
+const installBtn = document.getElementById("installBtn");
+
+// Register Service Worker
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("service-worker.js");
 }
 
-let deferredPrompt;
-const installBtn = document.getElementById("installBtn");
+// Hide button if already installed
+if (window.matchMedia('(display-mode: standalone)').matches) {
+    installBtn.style.display = "none";
+}
 
+// Capture install prompt
 window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    installBtn.style.display = "block";
 });
 
+// Manual install button
 installBtn.addEventListener("click", async () => {
-    if (!deferredPrompt) return;
+    if (!deferredPrompt) {
+        alert("Use Chrome menu → 'Install app'");
+        return;
+    }
 
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
@@ -54,6 +64,11 @@ installBtn.addEventListener("click", async () => {
         installBtn.style.display = "none";
     }
     deferredPrompt = null;
+});
+
+// Hide button after successful install
+window.addEventListener("appinstalled", () => {
+    installBtn.style.display = "none";
 });
 </script>
 
