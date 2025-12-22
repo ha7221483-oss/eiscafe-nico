@@ -1,0 +1,112 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    margin: 0;
+    background-color: #000000;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 500px;
+    padding: 25px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 32px;
+    margin: 30px 0;
+}
+
+#installBtn {
+    display: none;
+    width: 100%;
+    background: linear-gradient(45deg, #ff9800, #f44336);
+    color: white;
+    border: none;
+    padding: 20px;
+    border-radius: 15px;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
+}
+
+.input-area {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 35px;
+}
+
+input {
+    flex: 1;
+    padding: 20px;
+    background: #1a1a1a;
+    border: 2px solid #333;
+    color: white;
+    border-radius: 15px;
+    font-size: 24px; /* Riesige Schrift für das Samsung A56 */
+}
+
+#addBtn {
+    padding: 15px 30px;
+    background: #2f4f9f;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    padding: 25px;
+    border-radius: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 26px; /* Sehr groß und gut lesbar */
+    transition: all 0.2s;
+}
+
+li.done {
+    background: #0d1117;
+    color: #4a5568;
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.checkbox {
+    width: 40px; /* Extra große Checkbox zum Treffen */
+    height: 40px;
+    border: 3px solid #4a5568;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.checkbox.checked {
+    background: #2f4f9f;
+    border-color: #2f4f9f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.checkbox.checked::after {
+    content: '✔';
+    color: white;
+    font-size: 26px;
+}

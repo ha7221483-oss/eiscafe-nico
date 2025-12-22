@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Einkaufsliste PRO</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#000000">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <button id="installBtn">📲 APP INSTALLIEREN</button>
+        
+        <h1>🛒 Einkaufsliste</h1>
+        
+        <div class="input-area">
+            <input id="itemInput" type="text" placeholder="Was fehlt?" enterkeyhint="done">
+            <button id="addBtn">＋</button>
+        </div>
+        
+        <ul id="list"></ul>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Registrierung des Service Workers für Offline-Funktion
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("service-worker.js");
+        }
+
+        let deferredPrompt;
+        const installBtn = document.getElementById('installBtn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.style.display = 'block'; // Button zeigen
+        });
+
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    installBtn.style.display = 'none'; // Button verstecken nach Installation
+                }
+                deferredPrompt = null;
+            }
+        });
+    </script>
+</body>
+</html>
