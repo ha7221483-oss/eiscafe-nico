@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Einkaufsliste</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1e1e1e">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+<h1>Einkaufsliste</h1>
+
+<div class="input">
+<input id="input" placeholder="Artikel eingeben">
+<button onclick="add()">+</button>
+</div>
+
+<ul id="list"></ul>
+</div>
+
+<script src="app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js');
+}
+</script>
+</body>
+</html>
