@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Repo Gallery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:        #0a0a12;
+    --panel:     #12121e;
+    --panel-2:   #181828;
+    --text:      #e8e8f2;
+    --text-dim:  #7d7d96;
+    --cyan:      #00f0e8;
+    --magenta:   #ff2f92;
+    --ok:        #37ffb0;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html,body{ height:100%; background:var(--bg); color:var(--text); font-family:'Inter', system-ui, sans-serif; overflow-x:hidden; }
+  body{
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(255,47,146,0.10), transparent 45%),
+      radial-gradient(circle at 85% 15%, rgba(0,240,232,0.10), transparent 45%);
+    min-height:100%; display:flex; flex-direction:column;
+  }
+  header{ padding:32px clamp(20px,5vw,64px) 8px; }
+  .eyebrow{ font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:0.18em; color:var(--cyan); text-transform:uppercase; margin-bottom:10px; }
+  h1{
+    font-family:'JetBrains Mono', monospace; font-weight:700; font-size:clamp(24px,3.2vw,34px); letter-spacing:-0.01em;
+    background:linear-gradient(90deg, var(--text) 40%, var(--cyan)); -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .sub{ margin-top:8px; color:var(--text-dim); font-size:14px; max-width:65ch; line-height:1.5; }
+  .sub .k{ font-family:'JetBrains Mono', monospace; color:var(--cyan); background:rgba(0,240,232,0.08); padding:2px 8px; border-radius:6px; font-size:13px; }
+  main{ flex:1; padding:16px clamp(20px,5vw,64px) 64px; }
+
+  #statusbar{
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+    border-radius:16px; background:var(--panel); padding:18px 24px; margin-bottom:28px;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+  }
+  #statusbar .dot{ width:9px; height:9px; border-radius:50%; background:var(--text-dim); flex-shrink:0; }
+  #statusbar.live .dot{ background:var(--ok); box-shadow:0 0 10px var(--ok); }
+  #statusbar.err .dot{ background:var(--magenta); box-shadow:0 0 10px var(--magenta); }
+  #statusbar .msg{ font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--text-dim); flex:1; }
+  #statusbar .msg b{ color:var(--text); }
+  #refreshBtn{
+    font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--text);
+    background:var(--panel-2); border:none; border-radius:8px; padding:8px 14px; cursor:pointer;
+    transition:background 0.15s ease;
+  }
+  #refreshBtn:hover{ background:var(--cyan); color:#0a0a12; }
+
+  #empty{ margin-top:60px; text-align:center; color:var(--text-dim); font-size:14px; }
+  #empty .big{ font-family:'JetBrains Mono', monospace; font-size:15px; color:var(--text); margin-bottom:6px; }
+  #empty code{ font-family:'JetBrains Mono', monospace; color:var(--cyan); }
+
+  #grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(180px, 1fr)); gap:18px; }
+
+  .tile{
+    position:relative; border-radius:12px; overflow:hidden; aspect-ratio:1/1; background:var(--panel);
+    cursor:pointer; --glow:#00f0e8;
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--glow) 45%, transparent);
+    transition:transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .tile:hover{ transform:translateY(-3px); box-shadow: inset 0 0 0 1.5px var(--glow), 0 12px 26px -14px color-mix(in srgb, var(--glow) 60%, transparent); }
+  .tile img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .tile .overlay{
+    position:absolute; inset:0; display:flex; align-items:flex-end; justify-content:space-between; padding:8px;
+    background:linear-gradient(to top, rgba(0,0,0,0.65), transparent 55%);
+    opacity:0; transition:opacity 0.18s ease; pointer-events:none;
+  }
+  .tile:hover .overlay{ opacity:1; }
+  .tile .idx{ font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--text-dim); }
+  .tile .name{ font-family:'JetBrains Mono', monospace; font-size:10px; color:var(--text-dim); max-width:70%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+  #toast{
+    position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--panel-2); color:var(--text); font-family:'JetBrains Mono', monospace; font-size:13px;
+    padding:12px 20px; border-radius:10px; opacity:0; pointer-events:none;
+    transition:opacity 0.25s ease, transform 0.25s ease;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06), 0 10px 30px -10px rgba(0,0,0,0.6); z-index:50;
+  }
+  #toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+  #toast.ok{ box-shadow: inset 0 0 0 1px var(--ok); }
+  #toast.err{ box-shadow: inset 0 0 0 1px var(--magenta); }
+
+  #lightbox{
+    position:fixed; inset:0; background:rgba(6,6,12,0.92); backdrop-filter:blur(6px);
+    display:none; align-items:center; justify-content:center; z-index:100; padding:40px;
+  }
+  #lightbox.show{ display:flex; }
+  #lightbox img{ max-width:min(90vw, 1000px); max-height:80vh; border-radius:10px; box-shadow:0 30px 80px -20px rgba(0,0,0,0.8); }
+  #lightbox .lb-close{ position:absolute; top:24px; left:24px; }
+  .btn-icon{
+    width:34px; height:34px; border-radius:8px; border:none; display:flex; align-items:center; justify-content:center;
+    background:rgba(10,10,18,0.75); color:var(--text); cursor:pointer; transition:background 0.15s ease, color 0.15s ease;
+  }
+  .btn-icon svg{ width:16px; height:16px; }
+  .btn-icon:hover{ background:var(--cyan); color:#0a0a12; }
+
+  ::selection{ background:var(--magenta); color:#0a0a12; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Github Repo &rarr; Galerie</div>
+  <h1>Repo Gallery</h1>
+  <div class="sub">Zeigt live alle Bilder aus <span class="k">ha7221483-oss/elscafe-nico</span> &rarr; Ordner <span class="k">images/</span>. Foto einfach über „Add file&rdquo; in dem Ordner hochladen (geht auch vom Handy) &mdash; hier neu laden, fertig.</div>
+</header>
+
+<main>
+  <div id="statusbar">
+    <div class="dot"></div>
+    <div class="msg" id="statusmsg">Lade Bilderliste…</div>
+    <button id="refreshBtn">Neu laden</button>
+  </div>
+
+  <div id="empty" style="display:none">
+    <div class="big">Noch keine Bilder im Ordner</div>
+    <div>Lade ein Foto in <code>images/</code> hoch, dann klick auf „Neu laden&rdquo;.</div>
+  </div>
+
+  <div id="grid"></div>
+</main>
+
+<div id="lightbox">
+  <button class="btn-icon lb-close" id="lbClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <img id="lbImg" src="" alt="">
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ---- Konfiguration: hier anpassen falls Repo/Ordner/Branch anders heißen ----
+const OWNER  = 'ha7221483-oss';
+const REPO   = 'elscafe-nico';
+const BRANCH = 'main';
+const FOLDER = 'images';
+// -----------------------------------------------------------------------
+
+const IMG_EXT = /\.(jpe?g|png|webp|gif)$/i;
+const HUE_STEP = 137.508;
+
+const grid = document.getElementById('grid');
+const empty = document.getElementById('empty');
+const statusbar = document.getElementById('statusbar');
+const statusmsg = document.getElementById('statusmsg');
+const toast = document.getElementById('toast');
+const lightbox = document.getElementById('lightbox');
+const lbImg = document.getElementById('lbImg');
+
+function showToast(msg, kind){
+  toast.textContent = msg;
+  toast.className = 'show ' + (kind || '');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(()=> toast.className = '', 2200);
+}
+
+function hueForIndex(i){ return Math.round((i * HUE_STEP) % 360); }
+
+function rawUrl(path){
+  return `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/${path}`;
+}
+
+async function loadImages(){
+  statusbar.className = '';
+  statusmsg.textContent = 'Lade Bilderliste…';
+  grid.innerHTML = '';
+  empty.style.display = 'none';
+
+  const apiUrl = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${FOLDER}?ref=${BRANCH}`;
+
+  try{
+    const res = await fetch(apiUrl, { headers: { 'Accept': 'application/vnd.github+json' } });
+
+    if (res.status === 404){
+      statusbar.className = 'err';
+      statusmsg.innerHTML = `Ordner <b>${FOLDER}/</b> existiert noch nicht in <b>${OWNER}/${REPO}</b>.`;
+      empty.style.display = 'block';
+      return;
+    }
+    if (!res.ok){
+      const remaining = res.headers.get('x-ratelimit-remaining');
+      statusbar.className = 'err';
+      statusmsg.textContent = remaining === '0'
+        ? 'GitHub API-Limit erreicht (unauthentifiziert: 60 Anfragen/Std). Kurz warten und neu laden.'
+        : `Fehler beim Laden (${res.status}).`;
+      empty.style.display = 'block';
+      return;
+    }
+
+    const data = await res.json();
+    const files = (Array.isArray(data) ? data : [])
+      .filter(f => f.type === 'file' && IMG_EXT.test(f.name))
+      .sort((a,b) => a.name.localeCompare(b.name, undefined, { numeric:true }));
+
+    if (!files.length){
+      statusbar.className = '';
+      statusmsg.textContent = `Ordner ${FOLDER}/ ist leer.`;
+      empty.style.display = 'block';
+      return;
+    }
+
+    statusbar.className = 'live';
+    statusmsg.innerHTML = `<b>${files.length}</b> Bild${files.length===1?'':'er'} in ${FOLDER}/`;
+    render(files);
+
+  }catch(err){
+    console.error(err);
+    statusbar.className = 'err';
+    statusmsg.textContent = 'Netzwerkfehler beim Laden der Bilderliste.';
+    empty.style.display = 'block';
+  }
+}
+
+function render(files){
+  grid.innerHTML = '';
+  files.forEach((f, i) => {
+    const url = rawUrl(f.path);
+    const tile = document.createElement('div');
+    tile.className = 'tile';
+    tile.style.setProperty('--glow', `hsl(${hueForIndex(i)} 90% 60%)`);
+    tile.innerHTML = `
+      <img src="${url}" alt="${f.name}" loading="lazy">
+      <div class="overlay">
+        <span class="idx">#${String(i+1).padStart(2,'0')}</span>
+        <span class="name">${f.name}</span>
+      </div>
+    `;
+    tile.querySelector('img').addEventListener('click', () => openLightbox(url));
+    grid.appendChild(tile);
+  });
+}
+
+function openLightbox(url){
+  lbImg.src = url;
+  lightbox.classList.add('show');
+}
+function closeLightbox(){
+  lightbox.classList.remove('show');
+  lbImg.src = '';
+}
+document.getElementById('lbClose').addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+
+document.getElementById('refreshBtn').addEventListener('click', loadImages);
+
+loadImages();
+</script>
+</body>
+</html>
