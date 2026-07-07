@@ -86,20 +86,6 @@
   #toast.ok{ box-shadow: inset 0 0 0 1px var(--ok); }
   #toast.err{ box-shadow: inset 0 0 0 1px var(--magenta); }
 
-  #lightbox{
-    position:fixed; inset:0; background:rgba(6,6,12,0.92); backdrop-filter:blur(6px);
-    display:none; align-items:center; justify-content:center; z-index:100; padding:40px;
-  }
-  #lightbox.show{ display:flex; }
-  #lightbox img{ max-width:min(90vw, 1000px); max-height:80vh; border-radius:10px; box-shadow:0 30px 80px -20px rgba(0,0,0,0.8); }
-  #lightbox .lb-close{ position:absolute; top:24px; left:24px; }
-  .btn-icon{
-    width:34px; height:34px; border-radius:8px; border:none; display:flex; align-items:center; justify-content:center;
-    background:rgba(10,10,18,0.75); color:var(--text); cursor:pointer; transition:background 0.15s ease, color 0.15s ease;
-  }
-  .btn-icon svg{ width:16px; height:16px; }
-  .btn-icon:hover{ background:var(--cyan); color:#0a0a12; }
-
   ::selection{ background:var(--magenta); color:#0a0a12; }
 </style>
 </head>
@@ -126,11 +112,6 @@
   <div id="grid"></div>
 </main>
 
-<div id="lightbox">
-  <button class="btn-icon lb-close" id="lbClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-  <img id="lbImg" src="" alt="">
-</div>
-
 <div id="toast"></div>
 
 <script>
@@ -149,8 +130,6 @@ const empty = document.getElementById('empty');
 const statusbar = document.getElementById('statusbar');
 const statusmsg = document.getElementById('statusmsg');
 const toast = document.getElementById('toast');
-const lightbox = document.getElementById('lightbox');
-const lbImg = document.getElementById('lbImg');
 
 function showToast(msg, kind){
   toast.textContent = msg;
@@ -227,28 +206,26 @@ function render(files){
     tile.className = 'tile';
     tile.style.setProperty('--glow', `hsl(${hueForIndex(i)} 90% 60%)`);
     tile.innerHTML = `
-      <img src="${url}" alt="${f.name}" loading="lazy">
+      <img src="${url}" alt="${f.name}" title="Klicken zum Kopieren der Bildadresse" loading="lazy">
       <div class="overlay">
         <span class="idx">#${String(i+1).padStart(2,'0')}</span>
         <span class="name">${f.name}</span>
       </div>
     `;
-    tile.querySelector('img').addEventListener('click', () => openLightbox(url));
+    tile.querySelector('img').addEventListener('click', () => copyLink(url));
     grid.appendChild(tile);
   });
 }
 
-function openLightbox(url){
-  lbImg.src = url;
-  lightbox.classList.add('show');
+async function copyLink(url){
+  try{
+    await navigator.clipboard.writeText(url);
+    showToast('Bildadresse kopiert!', 'ok');
+  }catch(err){
+    console.error(err);
+    showToast('Kopieren fehlgeschlagen.', 'err');
+  }
 }
-function closeLightbox(){
-  lightbox.classList.remove('show');
-  lbImg.src = '';
-}
-document.getElementById('lbClose').addEventListener('click', closeLightbox);
-lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
 
 document.getElementById('refreshBtn').addEventListener('click', loadImages);
 
